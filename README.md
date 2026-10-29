@@ -14,6 +14,7 @@ pre-rendered for search engines and LLM crawlers, with a project-brief conversio
 | `design-4/` | Hyperspace (3D) — warp starfield, scroll-driven 3D tunnel through projects, unfolding steps |
 | `design-5/` | Orbit (3D) — orbiting labels, scroll-spun 3D cylinder gallery, stacked services, process cube |
 | `design-6/` | Kinetic (3D) — isometric image wall, velocity-driven type, 3D coverflow, scroll-read text |
+| `design-7/` | Signal (3D) — same school as 6; portrait cut-out between giant name layers, speed tapes, 3D deck, spotlight services, halftone poster |
 | `assets/js/data.js` | Projects: titles/descriptions (EN/AR), categories, country, image list `[file, w, h]` |
 | `assets/js/strings.js` | All UI copy EN/AR (pure JSON after `=`, read by `tools/prerender.py`) |
 | `assets/js/core.js` | Profile (name, email), language toggle, lightbox, reveal, count-up |
@@ -62,7 +63,7 @@ For a custom domain: `SITE_URL=https://example.com/ python3 tools/prerender.py`.
 
 1. Copy `design-N/index.html`, `style.css`, `app.js` to the repo root (replacing the chooser `index.html`).
 2. In the copied `index.html`: change `data-base="../"` to `data-base=""` and replace `../assets/` with `assets/`.
-3. Delete `design-1/` … `design-6/` and `assets/img/previews/`.
+3. Delete the other `design-N/` folders and `assets/img/previews/`.
 4. Run `python3 tools/prerender.py` (canonical URLs then point to the root).
 
 ## Deploy (GitHub Pages)
