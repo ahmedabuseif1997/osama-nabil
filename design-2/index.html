@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-base="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osama Nabil — Graphic &amp; Brand Designer</title>
+  <meta name="description" content="Osama Nabil — graphic designer crafting brand identities, social media campaigns, print collateral and Arabic typography across the UAE, Saudi Arabia, Oman and Egypt.">
+  <meta property="og:title" content="Osama Nabil — Graphic & Brand Designer">
+  <meta property="og:description" content="Brand identity · Social media · Print · Typography">
+  <meta property="og:image" content="../assets/img/portrait.jpg">
+  <meta name="theme-color" content="#f3f0e8">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/lightbox.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top" id="top">
+    <a class="top__name" href="#top" data-name>Osama Nabil</a>
+    <nav class="top__nav" aria-label="Primary">
+      <a href="#work" data-i18n="nav.work">Work</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <button class="top__lang" type="button" data-lang-toggle data-i18n="lang.switch">العربية</button>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1 class="hero__name" aria-label="Osama Nabil">
+        <span class="hero__line reveal" data-name-first>OSAMA</span>
+        <span class="hero__line hero__line--out reveal" data-name-last>NABIL</span>
+      </h1>
+      <div class="hero__grid">
+        <figure class="hero__photo reveal">
+          <img src="../assets/img/portrait.webp" width="1100" height="1377" alt="Osama Nabil" fetchpriority="high">
+        </figure>
+        <div class="hero__intro reveal">
+          <p class="label" data-i18n="hero.kicker">Graphic &amp; Brand Designer</p>
+          <p class="hero__lead" data-i18n-html="hero.title"></p>
+          <p class="hero__sub" data-i18n="hero.lead"></p>
+          <a class="link-arrow" href="#work"><span data-i18n="cta.work">View selected work</span> <span class="arr">→</span></a>
+        </div>
+        <ol class="hero__index reveal" id="heroIndex"></ol>
+      </div>
+    </section>
+
+    <section class="numbers" aria-label="Numbers" id="numbers"></section>
+
+    <section class="block" id="work">
+      <header class="block__head reveal">
+        <p class="label" data-i18n="work.kicker">Selected work</p>
+        <h2 data-i18n="work.title">Brands I’ve shaped.</h2>
+      </header>
+      <div class="filters reveal" id="filters" role="tablist"></div>
+      <ul class="index" id="workIndex"></ul>
+      <div class="preview" id="preview" aria-hidden="true"><img alt=""></div>
+    </section>
+
+    <section class="wall" aria-label="Gallery">
+      <div class="wall__cols" id="wall"></div>
+    </section>
+
+    <section class="block" id="services">
+      <header class="block__head reveal">
+        <p class="label" data-i18n="services.kicker">What I do</p>
+        <h2 data-i18n="services.title">From the first mark to the everyday post.</h2>
+      </header>
+      <div class="svc" id="svcList"></div>
+    </section>
+
+    <section class="block about" id="about">
+      <div class="about__col reveal">
+        <p class="label" data-i18n="about.kicker">About</p>
+        <h2 data-i18n="about.title">Arabic &amp; English. Print &amp; digital.</h2>
+      </div>
+      <div class="about__col reveal">
+        <p data-i18n="about.p1"></p>
+        <p data-i18n="about.p2"></p>
+        <ol class="process" id="process">
+          <li><b>01</b><span data-i18n="step1.t"></span></li>
+          <li><b>02</b><span data-i18n="step2.t"></span></li>
+          <li><b>03</b><span data-i18n="step3.t"></span></li>
+          <li><b>04</b><span data-i18n="step4.t"></span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <p class="label reveal" data-i18n="contact.kicker">Contact</p>
+      <h2 class="reveal" data-i18n="contact.title">Have a brand that needs a voice?</h2>
+      <p class="contact__lead reveal" data-i18n="contact.lead"></p>
+      <a class="contact__mail reveal" data-email data-email-text href="#">osamanabil419700@gmail.com</a>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>© <span data-year></span> <span data-name>Osama Nabil</span></span>
+    <span data-i18n="hero.role">Brand identity · Social media · Print · Typography</span>
+    <a href="#top" data-i18n="footer.top">Back to top</a>
+  </footer>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

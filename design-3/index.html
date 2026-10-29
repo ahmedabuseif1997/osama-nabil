@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-base="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osama Nabil — Graphic &amp; Brand Designer</title>
+  <meta name="description" content="Osama Nabil — graphic designer crafting brand identities, social media campaigns, print collateral and Arabic typography across the UAE, Saudi Arabia, Oman and Egypt.">
+  <meta property="og:title" content="Osama Nabil — Graphic & Brand Designer">
+  <meta property="og:description" content="Brand identity · Social media · Print · Typography">
+  <meta property="og:image" content="../assets/img/portrait.jpg">
+  <meta name="theme-color" content="#0e0b1a">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=Alexandria:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/lightbox.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow" aria-hidden="true"></div>
+  <header class="pill" id="top">
+    <a class="pill__brand" href="#top" data-i18n="brand">OSAMA.</a>
+    <nav class="pill__nav" aria-label="Primary">
+      <a href="#work" data-i18n="nav.work">Work</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#process" data-i18n="nav.process">Process</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <button class="pill__lang" type="button" data-lang-toggle data-i18n="lang.switch">العربية</button>
+  </header>
+
+  <main class="wrap">
+    <section class="bento" aria-label="Intro">
+      <div class="tile tile--intro reveal">
+        <p class="chip"><span class="pulse"></span><span data-i18n="hero.kicker">Graphic &amp; Brand Designer</span></p>
+        <h1 data-i18n-html="hero.title">Design that makes brands <em>speak.</em></h1>
+        <p class="lead" data-i18n="hero.lead"></p>
+        <div class="ctas">
+          <a class="btn" href="#work" data-i18n="cta.work">View selected work</a>
+          <a class="btn btn--line" href="#contact" data-i18n="cta.contact">Start a project</a>
+        </div>
+      </div>
+      <figure class="tile tile--photo reveal">
+        <img src="../assets/img/portrait.webp" width="1100" height="1377" alt="Osama Nabil" fetchpriority="high">
+        <figcaption><span data-name>Osama Nabil</span></figcaption>
+      </figure>
+      <div class="tile tile--stat reveal" id="statBrands"></div>
+      <div class="tile tile--stat tile--lime reveal" id="statDesigns"></div>
+      <div class="tile tile--countries reveal" id="countries"></div>
+      <button class="tile tile--show reveal" type="button" id="show" aria-label="Featured work"></button>
+      <div class="tile tile--chips reveal" id="chips"></div>
+    </section>
+
+    <section class="sec" id="work">
+      <header class="sec__head reveal">
+        <p class="chip" data-i18n="work.kicker">Selected work</p>
+        <h2 data-i18n="work.title">Brands I’ve shaped.</h2>
+      </header>
+      <div id="rails"></div>
+    </section>
+
+    <section class="sec" id="services">
+      <header class="sec__head reveal">
+        <p class="chip" data-i18n="services.kicker">What I do</p>
+        <h2 data-i18n="services.title">From the first mark to the everyday post.</h2>
+      </header>
+      <div class="acc" id="acc"></div>
+    </section>
+
+    <section class="sec" id="process">
+      <header class="sec__head reveal">
+        <p class="chip" data-i18n="process.kicker">Process</p>
+        <h2 data-i18n="process.title">Clear steps, no surprises.</h2>
+      </header>
+      <div class="steps">
+        <article class="step reveal"><b>01</b><h3 data-i18n="step1.t"></h3><p data-i18n="step1.d"></p></article>
+        <article class="step reveal"><b>02</b><h3 data-i18n="step2.t"></h3><p data-i18n="step2.d"></p></article>
+        <article class="step reveal"><b>03</b><h3 data-i18n="step3.t"></h3><p data-i18n="step3.d"></p></article>
+        <article class="step reveal"><b>04</b><h3 data-i18n="step4.t"></h3><p data-i18n="step4.d"></p></article>
+      </div>
+    </section>
+
+    <section class="sec about" id="about">
+      <div class="about__big reveal">
+        <p class="chip" data-i18n="about.kicker">About</p>
+        <h2 data-i18n="about.title">Arabic &amp; English. Print &amp; digital.</h2>
+      </div>
+      <div class="about__txt reveal">
+        <p data-i18n="about.p1"></p>
+        <p data-i18n="about.p2"></p>
+      </div>
+    </section>
+
+    <section class="cta reveal" id="contact">
+      <p class="cta__k" data-i18n="contact.kicker">Contact</p>
+      <h2 data-i18n="contact.title">Have a brand that needs a voice?</h2>
+      <p class="cta__lead" data-i18n="contact.lead"></p>
+      <a class="cta__mail" data-email href="#"><span data-email data-email-text>osamanabil419700@gmail.com</span> <span class="arr">↗</span></a>
+    </section>
+  </main>
+
+  <footer class="foot wrap">
+    <span>© <span data-year></span> <span data-name>Osama Nabil</span>. <span data-i18n="footer.rights">All rights reserved.</span></span>
+    <a href="#top" data-i18n="footer.top">Back to top</a>
+  </footer>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

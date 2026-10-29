@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osama Nabil — Choose a Design</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <style>
+    :root { --bg: #f5f4f0; --card: #fff; --fg: #141414; --muted: #666; --line: #e3e0d8; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #0f1115; --card: #171a21; --fg: #f1f1ee; --muted: #9aa0ab; --line: #262b35; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, 'Segoe UI', sans-serif; }
+    main { max-width: 1240px; margin: 0 auto; padding: 48px 16px 64px; }
+    h1 { font-size: clamp(28px, 4vw, 44px); margin: 0 0 8px; letter-spacing: -.02em; }
+    p.sub { color: var(--muted); margin: 0 0 36px; max-width: 640px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    a.card { display: block; text-decoration: none; color: inherit; background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; transition: transform .25s, box-shadow .25s; }
+    a.card:hover, a.card:focus-visible { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0, 0, 0, .12); outline: none; }
+    a.card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; display: block; border-bottom: 1px solid var(--line); }
+    .b { padding: 18px 20px 22px; }
+    .b h2 { margin: 0 0 6px; font-size: 20px; }
+    .b p { margin: 0; color: var(--muted); font-size: 15px; }
+    .sw { display: flex; gap: 6px; margin-top: 14px; }
+    .sw i { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Osama Nabil — portfolio designs</h1>
+    <p class="sub">Three directions built from the same content: 21 projects, 210 designs, English and Arabic. Open each one, then pick the design that goes live.</p>
+    <div class="grid">
+      <a class="card" href="design-1/">
+        <img src="assets/img/previews/design-1.webp" alt="Design 1 preview" width="1000" height="625">
+        <div class="b"><h2>1 · Executive Dark</h2><p>Ink background, mint accent, serif headlines. Follows the structure of ahmedabouseif.com.</p>
+          <div class="sw"><i style="background:#0b0e13"></i><i style="background:#7ef2c0"></i><i style="background:#f2f1ec"></i></div></div>
+      </a>
+      <a class="card" href="design-2/">
+        <img src="assets/img/previews/design-2.webp" alt="Design 2 preview" width="1000" height="625">
+        <div class="b"><h2>2 · Paper Index</h2><p>Warm paper, oversized type, a project index with hover previews and a masonry wall of designs.</p>
+          <div class="sw"><i style="background:#f3f0e8"></i><i style="background:#121212"></i><i style="background:#ff4b1f"></i></div></div>
+      </a>
+      <a class="card" href="design-3/">
+        <img src="assets/img/previews/design-3.webp" alt="Design 3 preview" width="1000" height="625">
+        <div class="b"><h2>3 · Bold Bento</h2><p>Deep violet with lime, bento-tile hero, a rotating showcase and scrolling project rails.</p>
+          <div class="sw"><i style="background:#0e0b1a"></i><i style="background:#d7ff3e"></i><i style="background:#b9a8ff"></i></div></div>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

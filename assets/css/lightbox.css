@@ -1,0 +1,38 @@
+/* Shared lightbox. Designs tint it with --lb-bg, --lb-fg and --lb-accent. */
+.pf-lb {
+  position: fixed; inset: 0; z-index: 1000;
+  display: grid; grid-template-rows: auto 1fr auto;
+  background: var(--lb-bg, rgba(8, 10, 14, .96));
+  color: var(--lb-fg, #f4f4f2);
+  backdrop-filter: blur(6px);
+  animation: pf-lb-in .25s ease;
+}
+.pf-lb[hidden] { display: none; }
+@keyframes pf-lb-in { from { opacity: 0; } to { opacity: 1; } }
+.pf-lb-open { overflow: hidden; }
+.pf-lb__bar { display: flex; align-items: center; gap: 16px; padding: 14px clamp(16px, 3vw, 32px); }
+.pf-lb__cap { font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pf-lb__count { opacity: .7; font-variant-numeric: tabular-nums; }
+.pf-lb__btn {
+  appearance: none; border: 1px solid currentColor; background: transparent; color: inherit;
+  width: 44px; height: 44px; border-radius: 999px; font-size: 20px; line-height: 1; cursor: pointer;
+  display: grid; place-items: center; transition: background .2s, color .2s, border-color .2s;
+}
+.pf-lb__btn:hover, .pf-lb__btn:focus-visible { background: var(--lb-accent, #7ef2c0); border-color: var(--lb-accent, #7ef2c0); color: #0b0d12; outline: none; }
+.pf-lb__stage { position: relative; display: grid; place-items: center; min-height: 0; padding: 0 clamp(8px, 6vw, 80px); }
+.pf-lb__img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 6px; box-shadow: 0 20px 60px rgba(0, 0, 0, .5); }
+.pf-lb__nav { position: absolute; top: 50%; transform: translateY(-50%); font-size: 28px; background: rgba(0, 0, 0, .35); }
+.pf-lb__prev { inset-inline-start: clamp(8px, 2vw, 24px); }
+.pf-lb__next { inset-inline-end: clamp(8px, 2vw, 24px); }
+[dir="rtl"] .pf-lb__nav { transform: translateY(-50%) scaleX(-1); }
+.pf-lb__thumbs { display: flex; gap: 8px; overflow-x: auto; padding: 12px clamp(16px, 3vw, 32px) 18px; scrollbar-width: thin; }
+.pf-lb__thumbs button { flex: 0 0 auto; width: 64px; height: 64px; padding: 0; border: 2px solid transparent; border-radius: 6px; overflow: hidden; background: #222; cursor: pointer; opacity: .55; transition: opacity .2s, border-color .2s; }
+.pf-lb__thumbs button.is-active, .pf-lb__thumbs button:hover { opacity: 1; border-color: var(--lb-accent, #7ef2c0); }
+.pf-lb__thumbs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 640px) {
+  .pf-lb__nav { top: auto; bottom: 8px; transform: none; }
+  [dir="rtl"] .pf-lb__nav { transform: scaleX(-1); }
+  .pf-lb__stage { padding-bottom: 60px; }
+  .pf-lb__thumbs button { width: 52px; height: 52px; }
+}
+@media (prefers-reduced-motion: reduce) { .pf-lb { animation: none; } }

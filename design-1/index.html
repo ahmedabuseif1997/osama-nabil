@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-base="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osama Nabil — Graphic &amp; Brand Designer</title>
+  <meta name="description" content="Osama Nabil — graphic designer crafting brand identities, social media campaigns, print collateral and Arabic typography across the UAE, Saudi Arabia, Oman and Egypt.">
+  <meta property="og:title" content="Osama Nabil — Graphic & Brand Designer">
+  <meta property="og:description" content="Brand identity · Social media · Print · Typography">
+  <meta property="og:image" content="../assets/img/portrait.jpg">
+  <meta name="theme-color" content="#0b0e13">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/lightbox.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="nav" id="top">
+    <a class="nav__brand" href="#top" data-i18n="brand">OSAMA.</a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#work" data-i18n="nav.work">Work</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#process" data-i18n="nav.process">Process</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+    <div class="nav__actions">
+      <button class="nav__lang" type="button" data-lang-toggle data-i18n="lang.switch">العربية</button>
+      <a class="btn btn--sm" href="#contact" data-i18n="cta.contact">Start a project</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero__text">
+        <p class="kicker reveal"><span class="dot"></span><span data-i18n="hero.kicker">Graphic &amp; Brand Designer</span></p>
+        <h1 class="hero__title reveal" data-i18n-html="hero.title">Design that makes brands <em>speak.</em></h1>
+        <p class="hero__lead reveal" data-i18n="hero.lead"></p>
+        <div class="hero__ctas reveal">
+          <a class="btn" href="#work"><span data-i18n="cta.work">View selected work</span> <span class="arr">↘</span></a>
+          <a class="btn btn--ghost" data-email href="#contact" data-i18n="cta.email">Email me</a>
+        </div>
+      </div>
+      <figure class="hero__photo reveal">
+        <img src="../assets/img/portrait.webp" width="1100" height="1377" alt="Osama Nabil" fetchpriority="high">
+        <figcaption>
+          <strong data-name>Osama Nabil</strong>
+          <span data-i18n="hero.role">Brand identity · Social media · Print · Typography</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <div class="marquee" aria-hidden="true"><div class="marquee__track" id="marquee"></div></div>
+
+    <section class="section" id="impact">
+      <div class="section__head reveal">
+        <p class="kicker" data-i18n="stats.kicker">By the numbers</p>
+        <h2 data-i18n="stats.title">A portfolio built on real briefs.</h2>
+      </div>
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="section__head reveal">
+        <p class="kicker" data-i18n="services.kicker">What I do</p>
+        <h2 data-i18n="services.title">From the first mark to the everyday post.</h2>
+      </div>
+      <div class="services" id="servicesGrid"></div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="section__head section__head--row reveal">
+        <div>
+          <p class="kicker" data-i18n="work.kicker">Selected work</p>
+          <h2 data-i18n="work.title">Brands I’ve shaped.</h2>
+        </div>
+        <div class="filters" id="filters" role="tablist"></div>
+      </div>
+      <div class="work" id="workGrid"></div>
+    </section>
+
+    <section class="section" id="process">
+      <div class="section__head reveal">
+        <p class="kicker" data-i18n="process.kicker">Process</p>
+        <h2 data-i18n="process.title">Clear steps, no surprises.</h2>
+      </div>
+      <ol class="steps">
+        <li class="reveal"><span class="steps__n">01</span><h3 data-i18n="step1.t"></h3><p data-i18n="step1.d"></p></li>
+        <li class="reveal"><span class="steps__n">02</span><h3 data-i18n="step2.t"></h3><p data-i18n="step2.d"></p></li>
+        <li class="reveal"><span class="steps__n">03</span><h3 data-i18n="step3.t"></h3><p data-i18n="step3.d"></p></li>
+        <li class="reveal"><span class="steps__n">04</span><h3 data-i18n="step4.t"></h3><p data-i18n="step4.d"></p></li>
+      </ol>
+    </section>
+
+    <section class="section about" id="about">
+      <div class="about__img reveal"><img id="aboutImg" alt="" loading="lazy"></div>
+      <div class="about__text reveal">
+        <p class="kicker" data-i18n="about.kicker">About</p>
+        <h2 data-i18n="about.title">Arabic &amp; English. Print &amp; digital.</h2>
+        <p data-i18n="about.p1"></p>
+        <p data-i18n="about.p2"></p>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <p class="kicker reveal" data-i18n="contact.kicker">Contact</p>
+      <h2 class="reveal" data-i18n="contact.title">Have a brand that needs a voice?</h2>
+      <p class="contact__lead reveal" data-i18n="contact.lead"></p>
+      <a class="contact__mail reveal" data-email data-email-text href="#">osamanabil419700@gmail.com</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© <span data-year></span> <span data-name>Osama Nabil</span>. <span data-i18n="footer.rights">All rights reserved.</span></span>
+    <a href="#top" data-i18n="footer.top">Back to top</a>
+  </footer>
+
+  <script src="../assets/js/data.js"></script>
+  <script src="../assets/js/core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
