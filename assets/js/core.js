@@ -171,7 +171,7 @@
     t: function (key) { return (strings[PF.lang] && strings[PF.lang][key]) || strings.en[key] || key; },
     name: function () { return profile.name[PF.lang]; },
     pick: function (obj) { return obj ? (obj[PF.lang] || obj.en) : ''; },
-    img: function (slug, file) { return base + 'assets/work/' + slug + '/' + file; },
+    img: function (slug, file) { var m = window.PF_IMG_MAP; return (m && m[slug + '/' + file]) || base + 'assets/work/' + slug + '/' + file; },
     cover: function (p) { return PF.img(p.slug, p.images[0][0]); },
     catLabel: function (c) { return PF.t('cat.' + c); },
     countryLabel: function (c) { return c ? PF.t('country.' + c) : ''; },
