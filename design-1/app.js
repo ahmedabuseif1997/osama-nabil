@@ -19,12 +19,6 @@
       .concat(PF.projects.filter(function (p) { return !p.featured; }));
   }
 
-  function renderMarquee() {
-    var items = SERVICES.map(PF.catLabel).concat(ordered().slice(0, 12).map(function (p) { return PF.pick(p.title); }));
-    var html = items.map(function (t) { return '<span>' + esc(t) + '</span>'; }).join('');
-    document.getElementById('marquee').innerHTML = html + html;
-  }
-
   function renderStats() {
     var countries = {};
     PF.projects.forEach(function (p) { if (p.country) countries[p.country] = 1; });
@@ -95,7 +89,6 @@
   }
 
   function renderAll() {
-    renderMarquee();
     renderStats();
     renderServices();
     renderFilters();
