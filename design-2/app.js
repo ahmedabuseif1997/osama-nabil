@@ -69,7 +69,7 @@
       li.setAttribute('data-cats', p.cats.join(' '));
       li.innerHTML =
         '<button type="button" aria-label="' + esc(PF.t('work.open') + ': ' + PF.pick(p.title)) + '">' +
-        '<img class="index__thumb" loading="lazy" alt="" src="' + PF.cover(p) + '">' +
+        '<img class="index__thumb pf-fit" style="background-color:' + p.images[0][3] + '" loading="lazy" alt="" src="' + PF.cover(p) + '">' +
         '<span class="index__n">' + pad(i + 1) + '</span>' +
         '<span class="index__t">' + esc(PF.pick(p.title)) + '</span>' +
         '<span class="index__c">' + esc(p.cats.map(PF.catLabel).join(' / ')) + '</span>' +
@@ -88,7 +88,12 @@
 
   var preview = document.getElementById('preview');
   var previewImg = preview.querySelector('img');
-  function showPreview(p) { previewImg.src = PF.cover(p); preview.classList.add('is-on'); }
+  function showPreview(p) {
+    previewImg.src = PF.cover(p);
+    previewImg.className = 'pf-fit';
+    previewImg.style.backgroundColor = p.images[0][3];
+    preview.classList.add('is-on');
+  }
   function hidePreview() { preview.classList.remove('is-on'); }
   if (finePointer) {
     document.addEventListener('mousemove', function (e) {

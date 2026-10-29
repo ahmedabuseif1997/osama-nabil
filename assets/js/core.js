@@ -30,6 +30,8 @@
     pick: function (obj) { return obj ? (obj[PF.lang] || obj.en) : ''; },
     img: function (slug, file) { var m = window.PF_IMG_MAP; return (m && m[slug + '/' + file]) || base + 'assets/work/' + slug + '/' + file; },
     cover: function (p) { return PF.img(p.slug, p.images[0][0]); },
+    /* Attributes that show the whole image (no crop) on its own edge colour: class="pf-fit" style="background-color:…". */
+    fit: function (p, i) { var im = p.images[i || 0]; return ' class="pf-fit" style="background-color:' + (im[3] || '#111') + '"'; },
     catLabel: function (c) { return PF.t('cat.' + c); },
     countryLabel: function (c) { return c ? PF.t('country.' + c) : ''; },
     totalImages: function () { return projects.reduce(function (n, p) { return n + p.images.length; }, 0); },
@@ -155,7 +157,7 @@
     p.images.forEach(function (im, k) {
       var b = document.createElement('button');
       b.type = 'button';
-      b.innerHTML = '<img loading="lazy" alt="" src="' + PF.img(p.slug, im[0]) + '">';
+      b.innerHTML = '<img loading="lazy" alt="" src="' + PF.img(p.slug, im[0]) + '"' + PF.fit(p, k) + '>';
       b.addEventListener('click', function () { idx = k; render(); });
       lbThumbs.appendChild(b);
     });

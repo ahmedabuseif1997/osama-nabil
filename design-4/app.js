@@ -76,7 +76,7 @@
       b.type = 'button';
       b.className = 't-card';
       b.setAttribute('aria-label', PF.t('work.open') + ': ' + PF.pick(p.title));
-      b.innerHTML = '<div class="t-card__img"><img alt="" src="' + PF.cover(p) + '"' + (i > 3 ? ' loading="lazy"' : '') + '></div>' +
+      b.innerHTML = '<div class="t-card__img"><img alt=""' + PF.fit(p) + ' src="' + PF.cover(p) + '"' + (i > 3 ? ' loading="lazy"' : '') + '></div>' +
         '<div class="t-card__cap"><b>' + esc(PF.pick(p.title)) + '</b><span>' + esc(PF.catLabel(p.cats[0])) + '</span></div>';
       b.addEventListener('click', function () { PF.lightbox.open(p, 0); });
       world.appendChild(b);
@@ -107,14 +107,14 @@
     var now = list.length - 1;
     for (var i = 0; i < cards.length; i++) {
       var g = geom.pos[i], rel = g.z + cam, c = cards[i], o;
-      if (rel > 320 || rel < -D * 7.5) { c.style.visibility = 'hidden'; continue; }
-      o = rel > -120 ? 1 - (rel + 120) / 440 : 1 + (rel + 120) / (D * 7);
+      if (rel > -250 || rel < -D * 7.5) { c.style.visibility = 'hidden'; continue; }
+      o = rel > -420 ? 1 - (rel + 420) / 170 : 1 + (rel + 420) / (D * 7);
       o = M.clamp(o, 0, 1);
       c.style.visibility = 'visible';
       c.style.opacity = o.toFixed(3);
-      c.style.pointerEvents = o > 0.4 && rel < 40 ? 'auto' : 'none';
+      c.style.pointerEvents = o > 0.6 ? 'auto' : 'none';
       c.style.transform = 'translate3d(' + g.x.toFixed(1) + 'px,' + g.y.toFixed(1) + 'px,' + g.z + 'px) rotateY(' + (-g.x / (geom.rx || 1) * 14).toFixed(2) + 'deg)';
-      if (rel < -160 && i < now) now = i;
+      if (rel < -420 && i < now) now = i;
     }
     if (now !== lastNow) {
       lastNow = now;

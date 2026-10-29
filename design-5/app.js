@@ -11,6 +11,7 @@
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function ordered() { return PF.projects.filter(function (p) { return p.featured; }).concat(PF.projects.filter(function (p) { return !p.featured; })); }
   function imgOf(slug, i) { var p = PF.bySlug(slug); return PF.img(slug, p.images[Math.min(i, p.images.length - 1)][0]); }
+  function edgeOf(slug, i) { var p = PF.bySlug(slug); return p.images[Math.min(i, p.images.length - 1)][3]; }
 
   /* ---------- Orbiting labels ---------- */
   function renderOrbit() {
@@ -45,7 +46,7 @@
       b.type = 'button';
       b.className = 'ring__card';
       b.setAttribute('aria-label', PF.t('work.open') + ': ' + PF.pick(p.title));
-      b.innerHTML = '<img alt="" src="' + PF.cover(p) + '"' + (i > 4 && i < list.length - 4 ? ' loading="lazy"' : '') + '>';
+      b.innerHTML = '<img alt=""' + PF.fit(p) + ' src="' + PF.cover(p) + '"' + (i > 4 && i < list.length - 4 ? ' loading="lazy"' : '') + '>';
       b.addEventListener('click', function () { PF.lightbox.open(p, 0); });
       wheel.appendChild(b);
       return b;
@@ -94,7 +95,7 @@
       var im = SVC_IMG[k];
       return '<article class="stack__card" style="--k:' + i + '"><div><b>' + pad(i + 1) + '</b><h3>' + esc(PF.t('svc.' + k + '.t')) + '</h3><p>' + esc(PF.t('svc.' + k + '.d')) +
         '</p><a href="#contact" data-brief-service="' + k + '">' + esc(PF.t('cta.contact')) + ' <span class="arr" aria-hidden="true">→</span></a></div>' +
-        '<div class="stack__img"><img loading="lazy" alt="' + esc(PF.catLabel(k)) + '" src="' + imgOf(im[0], im[1]) + '"></div></article>';
+        '<div class="stack__img"><img loading="lazy" class="pf-fit" style="background-color:' + edgeOf(im[0], im[1]) + '" alt="' + esc(PF.catLabel(k)) + '" src="' + imgOf(im[0], im[1]) + '"></div></article>';
     }).join('');
     stackCards = Array.prototype.slice.call(wrap.querySelectorAll('.stack__card'));
   }
@@ -110,7 +111,11 @@
   /* ---------- About / stats ---------- */
   function renderAbout() {
     var picks = [['green-motion', 2], ['relief-cafe', 3], ['mimar-oman', 4]];
-    document.querySelectorAll('.about__float img').forEach(function (im, i) { im.src = imgOf(picks[i][0], picks[i][1]); });
+    document.querySelectorAll('.about__float img').forEach(function (im, i) {
+      im.src = imgOf(picks[i][0], picks[i][1]);
+      im.className = 'pf-fit';
+      im.style.backgroundColor = edgeOf(picks[i][0], picks[i][1]);
+    });
     var countries = {};
     PF.projects.forEach(function (p) { if (p.country) countries[p.country] = 1; });
     var data = [

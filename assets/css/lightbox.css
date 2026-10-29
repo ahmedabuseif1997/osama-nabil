@@ -36,3 +36,6 @@
   .pf-lb__thumbs button { width: 52px; height: 52px; }
 }
 @media (prefers-reduced-motion: reduce) { .pf-lb { animation: none; } }
+
+/* Whole image, never cropped; the inline background-color is the image's own edge colour. */
+img.pf-fit { object-fit: contain !important; }

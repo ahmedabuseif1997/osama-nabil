@@ -11,6 +11,7 @@
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function ordered() { return PF.projects.filter(function (p) { return p.featured; }).concat(PF.projects.filter(function (p) { return !p.featured; })); }
   function imgOf(slug, i) { var p = PF.bySlug(slug); return PF.img(slug, p.images[Math.min(i, p.images.length - 1)][0]); }
+  function edgeOf(slug, i) { var p = PF.bySlug(slug); return p.images[Math.min(i, p.images.length - 1)][3]; }
   function tick(el) { el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
 
   /* ---------- Hero ---------- */
@@ -73,7 +74,7 @@
     cards = list.map(function (p, i) {
       var b = document.createElement('div');
       b.className = 'deck__card';
-      b.innerHTML = '<img alt="" src="' + PF.cover(p) + '"' + (i > 3 ? ' loading="lazy"' : '') + '>';
+      b.innerHTML = '<img alt=""' + PF.fit(p) + ' src="' + PF.cover(p) + '"' + (i > 3 ? ' loading="lazy"' : '') + '>';
       b.style.zIndex = String(list.length - i);
       pile.appendChild(b);
       return b;
@@ -90,8 +91,8 @@
       c.style.visibility = 'visible';
       if (d < 0) {
         var t = M.clamp(-d, 0, 1);
-        c.style.transform = 'translate3d(' + (t * -30).toFixed(1) + '%,' + (t * -115).toFixed(1) + '%,' + (t * 160).toFixed(1) + 'px) rotateX(' + (t * 55).toFixed(1) + 'deg) rotateZ(' + (t * -16).toFixed(1) + 'deg)';
-        c.style.opacity = (1 - t).toFixed(3);
+        c.style.transform = 'translate3d(' + (t * -125).toFixed(1) + '%,' + (t * 12).toFixed(1) + '%,' + (t * 60).toFixed(1) + 'px) rotateY(' + (t * 28).toFixed(1) + 'deg) rotateZ(' + (t * -12).toFixed(1) + 'deg)';
+        c.style.opacity = (t < 0.65 ? 1 : (1 - t) / 0.35).toFixed(3);
       } else {
         c.style.transform = 'translate3d(' + (d * 26).toFixed(1) + 'px,' + (d * -20).toFixed(1) + 'px,' + (d * -90).toFixed(1) + 'px) rotateZ(' + (d * 3).toFixed(2) + 'deg)';
         c.style.opacity = d > 4.5 ? (5.5 - d).toFixed(3) : '1';
@@ -128,7 +129,10 @@
     spotNow = i;
     spotItems.forEach(function (li, k) { li.classList.toggle('is-on', k === i); });
     var k = SERVICES[i], im = SVC_IMG[k], flip = document.getElementById('spotFlip');
-    document.getElementById('spotImg').src = imgOf(im[0], im[1]);
+    var spotImg = document.getElementById('spotImg');
+    spotImg.src = imgOf(im[0], im[1]);
+    spotImg.className = 'pf-fit';
+    spotImg.style.backgroundColor = edgeOf(im[0], im[1]);
     document.getElementById('spotImg').alt = PF.t('svc.' + k + '.t');
     document.getElementById('spotDesc').textContent = PF.t('svc.' + k + '.d');
     flip.classList.remove('flip'); void flip.offsetWidth; flip.classList.add('flip');

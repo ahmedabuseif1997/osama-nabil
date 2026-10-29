@@ -26,7 +26,7 @@
     var feat = PF.projects.filter(function (p) { return p.featured; });
     var box = document.getElementById('show');
     box.innerHTML = feat.map(function (p, i) {
-      return '<img alt="" ' + (i === 0 ? '' : 'loading="lazy" ') + 'src="' + PF.cover(p) + '"' + (i === 0 ? ' class="is-on"' : '') + '>';
+      return '<img alt="" ' + (i === 0 ? '' : 'loading="lazy" ') + 'src="' + PF.cover(p) + '" class="pf-fit' + (i === 0 ? ' is-on' : '') + '" style="background-color:' + p.images[0][3] + '">';
     }).join('') + '<span class="cap"></span>';
     var imgs = box.querySelectorAll('img'), cap = box.querySelector('.cap'), i = 0;
     function set(n) {
@@ -63,7 +63,7 @@
         b.type = 'button';
         b.className = 'proj';
         b.setAttribute('aria-label', PF.t('work.open') + ': ' + PF.pick(p.title));
-        b.innerHTML = '<div class="proj__img"><img loading="lazy" alt="" src="' + PF.cover(p) + '"></div>' +
+        b.innerHTML = '<div class="proj__img"><img loading="lazy" alt=""' + PF.fit(p) + ' src="' + PF.cover(p) + '"></div>' +
           '<div class="proj__b"><h4>' + esc(PF.pick(p.title)) + '</h4><p>' +
           esc([PF.countryLabel(p.country), p.images.length + ' ' + PF.t('work.images')].filter(Boolean).join(' · ')) + '</p></div>';
         b.addEventListener('click', function () { PF.lightbox.open(p, 0); });

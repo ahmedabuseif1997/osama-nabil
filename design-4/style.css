@@ -92,7 +92,7 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 800; }
 .t-card__cap { display: flex; justify-content: space-between; gap: 10px; padding: 12px 4px 0; }
 .t-card__cap b { font-family: var(--display); font-size: 17px; font-weight: 600; }
 .t-card__cap span { color: var(--cyan); font-size: 13px; white-space: nowrap; }
-.tunnel__hud { position: absolute; inset: 0; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; padding: 96px clamp(16px, 4vw, 44px) 32px; }
+.tunnel__hud { position: absolute; inset: 0; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; padding: 96px clamp(16px, 4vw, 44px) 92px; }
 .tunnel__hud h2 { font-size: clamp(28px, 3.6vw, 52px); line-height: 1.05; max-width: 12ch; }
 [dir="rtl"] .tunnel__hud h2 { line-height: 1.4; }
 .hud__hint { color: var(--muted); font-size: 14px; max-width: 300px; }

@@ -79,7 +79,7 @@
       var meta = p.cats.map(function (k) { return '<span class="tag">' + esc(PF.catLabel(k)) + '</span>'; }).join('');
       if (p.country) meta += '<span>' + esc(PF.countryLabel(p.country)) + '</span>';
       c.innerHTML =
-        '<div class="card__media"><img loading="lazy" src="' + PF.cover(p) + '" width="' + p.images[0][1] + '" height="' + p.images[0][2] + '" alt="' + esc(PF.pick(p.title)) + '"></div>' +
+        '<div class="card__media"><img loading="lazy"' + PF.fit(p) + ' src="' + PF.cover(p) + '" width="' + p.images[0][1] + '" height="' + p.images[0][2] + '" alt="' + esc(PF.pick(p.title)) + '"></div>' +
         '<span class="card__count">' + p.images.length + ' ' + esc(PF.t('work.images')) + '</span>' +
         '<div class="card__body"><div class="card__meta">' + meta + '</div><h3>' + esc(PF.pick(p.title)) + '</h3><p>' + esc(PF.pick(p.desc)) + '</p></div>';
       c.addEventListener('click', function () { PF.lightbox.open(p, 0); });
@@ -100,6 +100,8 @@
     var liwa = PF.bySlug('liwa-2025');
     var about = document.getElementById('aboutImg');
     about.src = PF.cover(liwa);
+    about.className = 'pf-fit';
+    about.style.backgroundColor = liwa.images[0][3];
     about.addEventListener('click', function () { PF.lightbox.open(liwa, 0); });
     renderAll();
     PF.onLang(function () { renderAll(); document.querySelectorAll('.reveal').forEach(function (e) { e.classList.add('is-in'); }); });

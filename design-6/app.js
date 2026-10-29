@@ -67,7 +67,7 @@
       b.type = 'button';
       b.className = 'flow__card';
       b.setAttribute('aria-label', PF.t('work.open') + ': ' + PF.pick(p.title));
-      b.innerHTML = '<img alt="" src="' + PF.cover(p) + '"' + (i > 3 ? ' loading="lazy"' : '') + '><i class="flow__num">' + pad(i + 1) + '</i>' +
+      b.innerHTML = '<img alt=""' + PF.fit(p) + ' src="' + PF.cover(p) + '"' + (i > 3 ? ' loading="lazy"' : '') + '><i class="flow__num">' + pad(i + 1) + '</i>' +
         '<figcaption><b>' + esc(PF.pick(p.title)) + '</b><span>' + esc(p.cats.map(PF.catLabel).join(' · ')) + '</span></figcaption>';
       b.addEventListener('click', function () { PF.lightbox.open(p, 0); });
       track.appendChild(b);
