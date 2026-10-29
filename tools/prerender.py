@@ -8,7 +8,7 @@ For each page that contains the markers below it:
   * inserts shared conversion partials between <!--inc:NAME--> and <!--/inc:NAME-->
     (clients, midcta, faq, brief, sticky)
   * inserts static project / service lists between <!--pr:projects--> / <!--pr:projects:li--> /
-    <!--pr:services--> markers (JavaScript replaces them with the interactive versions)
+    <!--pr:services--> / <!--pr:services:li--> markers (JavaScript replaces them with the interactive versions)
 and regenerates robots.txt, sitemap.xml and llms.txt at the repo root.
 
 Run after any content change:  python3 tools/prerender.py
@@ -51,7 +51,7 @@ def i18n(tag, key, cls='', extra=''):
 
 
 # ---------------------------------------------------------------- partials
-def p_clients():
+def p_clients(base=''):
     names = ''.join('<li>%s</li>' % e(p['title']['en']) for p in PROJECTS if p['slug'] != 'typography')
     return ('<section class="clients" aria-labelledby="clientsTitle"><div class="f-wrap clients__head">'
             '<h2 class="clients__title" id="clientsTitle" data-i18n="clients.title">%s</h2>%s</div>'
@@ -59,13 +59,13 @@ def p_clients():
             % (e(t('clients.title')), i18n('p', 'clients.kicker', 'clients__kicker'), names))
 
 
-def p_midcta():
+def p_midcta(base=''):
     return ('<aside class="midcta"><div>%s%s</div>'
             '<a class="f-btn" href="#contact"><span data-i18n="cta.contact">%s</span> <span class="arr" aria-hidden="true">→</span></a></aside>'
             % (i18n('h3', 'mid.title'), i18n('p', 'mid.text'), e(t('cta.contact'))))
 
 
-def p_faq():
+def p_faq(base=''):
     items = ''.join('<details%s><summary data-i18n="faq.q%d">%s</summary><p data-i18n="faq.a%d">%s</p></details>'
                     % (' open' if i == 1 else '', i, e(t('faq.q%d' % i)), i, e(t('faq.a%d' % i))) for i in range(1, 6))
     return ('<section class="faq f-wrap" id="faq" aria-labelledby="faqTitle"><div class="faq__grid"><div>%s'
@@ -88,7 +88,7 @@ def field(name, key, kind='input', required=False, auto='', mode=''):
         name, key, e(t(key)), star, ctl)
 
 
-def p_brief():
+def p_brief(base=''):
     services = ''.join(chip('checkbox', 'services', k, 'cat.' + k) for k in SERVICES) + chip('checkbox', 'services', 'unsure', 'brief.unsure')
     times = ''.join(chip('radio', 'timeline', 't%d' % i, 'brief.t%d' % i) for i in range(1, 5))
     nav_next = '<button type="button" class="f-btn" data-next><span data-i18n="brief.next">%s</span> <span class="arr" aria-hidden="true">→</span></button>' % e(t('brief.next'))
@@ -97,6 +97,8 @@ def p_brief():
     return (
         '<section class="brief f-wrap" id="contact" aria-labelledby="briefTitle"><div class="brief__grid">'
         '<div class="brief__intro">%s<h2 class="f-h2" id="briefTitle" data-i18n="brief.title">%s</h2>%s'
+        '<div class="brief__person"><img src="%sassets/img/avatar.webp" width="96" height="96" alt="%s" loading="lazy">'
+        '<p><b>%s</b><span data-i18n="brief.person">%s</span></p></div>'
         '<ul class="brief__trust">%s</ul>'
         '<p class="brief__alt"><span data-i18n="brief.alt">%s</span> <a data-email data-email-text href="mailto:%s">%s</a></p></div>'
         '<form class="brief__form" novalidate aria-label="%s">'
@@ -117,7 +119,8 @@ def p_brief():
         '<div class="brief__nav"><button type="button" class="f-btn" data-copy data-i18n="brief.copy">%s</button>'
         '<button type="button" class="f-btn f-btn--ghost" data-again data-i18n="brief.again">%s</button></div></div>'
         '</form></div></section>'
-        % (i18n('p', 'brief.kicker', 'f-kicker'), e(t('brief.title')), i18n('p', 'brief.lead', 'brief__lead'), trust,
+        % (i18n('p', 'brief.kicker', 'f-kicker'), e(t('brief.title')), i18n('p', 'brief.lead', 'brief__lead'),
+           base, NAME_EN, NAME_EN, e(t('brief.person')), trust,
            e(t('brief.alt')), EMAIL, EMAIL, e(t('brief.title')),
            e(t('brief.step')), e(t('brief.of')),
            e(t('brief.q1')), i18n('p', 'brief.q1h', 'brief__hint'), services, nav_next,
@@ -131,10 +134,10 @@ def p_brief():
            e(t('brief.doneT')), e(t('brief.doneP')), EMAIL, EMAIL, e(t('brief.copy')), e(t('brief.again'))))
 
 
-def p_sticky():
-    return ('<div class="sticky-cta" aria-hidden="true">%s'
+def p_sticky(base=''):
+    return ('<div class="sticky-cta" aria-hidden="true"><img src="%sassets/img/avatar.webp" width="40" height="40" alt="" loading="lazy">%s'
             '<a class="f-btn" href="#contact"><span data-i18n="sticky.cta">%s</span> <span class="arr" aria-hidden="true">→</span></a></div>'
-            % (i18n('span', 'sticky.text'), e(t('sticky.cta'))))
+            % (base, i18n('span', 'sticky.text'), e(t('sticky.cta'))))
 
 
 PARTIALS = {'clients': p_clients, 'midcta': p_midcta, 'faq': p_faq, 'brief': p_brief, 'sticky': p_sticky}
@@ -155,9 +158,10 @@ def pr_projects(li=False):
     return ''.join(('<li>%s</li>' % x) if li else x for x in items)
 
 
-def pr_services():
-    return ''.join('<article class="pr-item"><h3>%s</h3><p>%s</p></article>' % (
-        e(EN['svc.%s.t' % k]), e(EN['svc.%s.d' % k])) for k in SERVICES)
+def pr_services(li=False):
+    items = ['<article class="pr-item"><h3>%s</h3><p>%s</p></article>' % (
+        e(EN['svc.%s.t' % k]), e(EN['svc.%s.d' % k])) for k in SERVICES]
+    return ''.join(('<li>%s</li>' % x) if li else x for x in items)
 
 
 # ---------------------------------------------------------------- SEO head
@@ -253,11 +257,13 @@ def process(path):
     if '<!--seo-->' not in h:
         return False
     h = between(h, 'seo', seo_head(url))
+    base = '' if rel == '.' else '../' * (rel.count(os.sep) + 1)
     for name, fn in PARTIALS.items():
-        h = between(h, 'inc:' + name, fn())
+        h = between(h, 'inc:' + name, fn(base))
     h = between(h, 'pr:projects', pr_projects())
     h = between(h, 'pr:projects:li', pr_projects(li=True))
     h = between(h, 'pr:services', pr_services())
+    h = between(h, 'pr:services:li', pr_services(li=True))
     h = fill_i18n(h)
     open(path, 'w', encoding='utf-8').write(h)
     return True

@@ -136,7 +136,10 @@ window.PORTFOLIO_STRINGS = {
   "faq.q5": "What should I include in my brief?",
   "faq.a5": "What you need (for example a logo, a social media campaign or event print), when you need it, an approximate budget if you have one, and the best way to reach you.",
   "brief.alt": "Prefer to write directly? Email",
-  "brief.required": "Required"
+  "brief.required": "Required",
+  "brief.person": "Your brief goes straight to my inbox.",
+  "footer.talk": "Let’s talk",
+  "hero.scroll": "Scroll"
  },
  "ar": {
   "meta.title": "أسامة نبيل — مصمم جرافيك وهويات بصرية",
@@ -274,6 +277,9 @@ window.PORTFOLIO_STRINGS = {
   "faq.q5": "ماذا أكتب في الطلب؟",
   "faq.a5": "ما تحتاجه (مثل شعار أو حملة سوشيال ميديا أو مطبوعات فعالية)، ومتى تحتاجه، وميزانية تقريبية إن وجدت، وأفضل طريقة للتواصل معك.",
   "brief.alt": "تفضّل المراسلة مباشرة؟ البريد",
-  "brief.required": "مطلوب"
+  "brief.required": "مطلوب",
+  "brief.person": "يصل طلبك مباشرة إلى بريدي.",
+  "footer.talk": "لنتحدث",
+  "hero.scroll": "مرّر"
  }
 };
