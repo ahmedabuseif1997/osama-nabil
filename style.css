@@ -43,8 +43,11 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 
 /* Hero + isometric wall */
 .hero { position: relative; min-height: 100vh; min-height: 100svh; overflow: hidden; contain: paint; }
-.iso { position: absolute; inset: 0; perspective: 1800px; }
-.iso__plane { position: absolute; left: 50%; top: 50%; width: max(170vw, 1500px); display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; transform: translate(-50%, -50%) rotateX(var(--ix, 52deg)) rotateZ(var(--iz, -32deg)) scale(var(--is, 1.1)); transform-style: preserve-3d; will-change: transform; }
+.iso { position: absolute; inset: 0; perspective: 2400px; overflow: hidden; }
+/* Still, blurred mosaic behind the tilted wall: whatever edge of the wall comes into view shows designs, never black. */
+.iso__fill { position: absolute; inset: -40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); grid-auto-rows: 220px; gap: 12px; filter: blur(7px) brightness(.5) saturate(1.1); }
+.iso__fill img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+.iso__plane { position: absolute; left: 50%; top: 50%; width: max(260vw, 2600px); display: grid; grid-template-columns: repeat(9, 1fr); gap: 18px; transform: translate(-50%, calc(-50% - 10vh)) rotateX(var(--ix, 52deg)) rotateZ(var(--iz, -32deg)) scale(var(--is, 1.2)); transform-style: preserve-3d; will-change: transform; }
 .iso__col { display: flex; flex-direction: column; gap: 18px; will-change: transform; }
 .iso__col img { width: 100%; border-radius: 12px; box-shadow: 0 20px 40px rgba(0, 0, 0, .5); }
 .hero__shade { position: absolute; inset: 0; background: linear-gradient(to top, var(--bg) 6%, rgba(12, 12, 12, .72) 46%, rgba(12, 12, 12, .35) 100%); }

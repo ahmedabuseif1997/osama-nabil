@@ -16,41 +16,54 @@
     document.querySelector('.hero__name').setAttribute('aria-label', PF.name());
   }
 
-  /* Touch devices (phones and tablets, iOS and Android) and small screens get one image per project:
+  /* Touch devices (phones and tablets, iOS and Android) get one image per project:
      a lighter 3D layer that mobile browsers keep animating smoothly. */
   var touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  var isoCols = [], ISO_GAP = 18;
+  /* Wall size: width as a multiple of the screen width, column count, and how many screen-lengths of images each column holds. */
+  var ISO = touch ? { wMul: 1.9, wMin: 1500, cols: 6, depth: 5 } : { wMul: 2.6, wMin: 2600, cols: 12, depth: 5 };
+
+  /* The tilted wall must cover the whole hero at every moment of the drift. Each column is one set of
+     images (period P) repeated k times; drifting by up to P keeps (k-1)P filled, so k is chosen from the
+     screen size. Width/height attributes let the layout be measured before the images load. */
   function buildIso() {
-    var picks = [], perProject = touch || innerWidth < 1024 ? 1 : 2;
-    PF.projects.forEach(function (p) { p.images.slice(0, perProject).forEach(function (im) { picks.push(PF.img(p.slug, im[0])); }); });
-    var cols = 6, per = Math.ceil(picks.length / cols), html = '';
-    for (var c = 0; c < cols; c++) {
-      var col = picks.slice(c * per, c * per + per);
-      var imgs = col.map(function (src) { return '<img alt="" decoding="async" src="' + src + '">'; }).join('');
-      html += '<div class="iso__col">' + imgs + imgs + '</div>';
+    var plane = document.getElementById('iso');
+    var vw = innerWidth, big = Math.max(vw, innerHeight);
+    var n = ISO.cols, perProject = touch || vw < 1024 ? 1 : 2, picks = [];
+    PF.projects.forEach(function (p) { p.images.slice(0, perProject).forEach(function (im) { picks.push(im.concat(p.slug)); }); });
+    plane.style.width = Math.round(Math.max(ISO.wMul * vw, ISO.wMin)) + 'px';
+    plane.style.gridTemplateColumns = 'repeat(' + n + ', 1fr)';
+    var per = Math.ceil(picks.length / n), sets = [], html = '';
+    for (var c = 0; c < n; c++) {
+      var set = picks.slice(c * per, c * per + per);
+      if (!set.length) set = picks.slice(0, per);
+      sets.push(set.map(function (im) { return '<img alt="" decoding="async" src="' + PF.img(im[4], im[0]) + '" width="' + im[1] + '" height="' + im[2] + '">'; }).join(''));
+      html += '<div class="iso__col">' + sets[c] + '</div>';
     }
-    document.getElementById('iso').innerHTML = html;
+    plane.innerHTML = html;
+    /* Backing mosaic: enough tiles to fill the hero (170px x 220px cells, cycling through the same images). */
+    var fill = document.getElementById('isoFill'), cells = Math.ceil((vw + 80) / 182) * Math.ceil((innerHeight + 80) / 232), fh = '';
+    for (var f = 0; f < cells; f++) { var im = picks[f % picks.length]; fh += '<img alt="" decoding="async" src="' + PF.img(im[4], im[0]) + '">'; }
+    fill.innerHTML = fh;
+    var cols = plane.querySelectorAll('.iso__col'), minP = Infinity;
+    cols.forEach(function (el) { minP = Math.min(minP, el.scrollHeight + ISO_GAP); });
+    var k = Math.max(4, Math.min(16, Math.ceil(ISO.depth * big / minP) + 2));
+    plane.dataset.repeat = k;
+    cols.forEach(function (el, i) { el.innerHTML = new Array(k + 1).join(sets[i]); });
+    isoCols = Array.prototype.map.call(cols, function (el, i) {
+      return { el: el, dir: i % 2 ? -1 : 1, secs: i % 2 ? 70 : 60, off: 0, period: (el.scrollHeight + ISO_GAP) / k };
+    });
   }
 
-  /* Column drift is driven from JS (CSS animations on this large 3D layer freeze in iOS Safari).
-     Each column holds its images twice, so shifting by half its height loops seamlessly. */
+  /* Column drift is driven from JS (CSS animations on this large 3D layer freeze in iOS Safari). */
   function animateIso() {
-    var hero = document.getElementById('hero');
-    var cols = Array.prototype.map.call(document.querySelectorAll('.iso__col'), function (el, i) {
-      return { el: el, dir: i % 2 ? -1 : 1, secs: i % 2 ? 70 : 60, off: 0, half: 0 };
-    });
-    function measure() { cols.forEach(function (c) { c.half = c.el.scrollHeight / 2; }); }
-    measure();
-    window.addEventListener('load', measure);
-    window.addEventListener('resize', measure);
-    document.querySelectorAll('.iso__col img').forEach(function (im) { im.addEventListener('load', measure); });
-    var last = performance.now();
+    var hero = document.getElementById('hero'), last = performance.now();
     (function frame(now) {
       var dt = Math.min(0.1, (now - last) / 1000);
       last = now;
       if (window.scrollY < hero.offsetHeight * 1.2) {
-        cols.forEach(function (c) {
-          if (!c.half) return;
-          c.off = ((c.off + c.dir * dt * c.half / c.secs) % c.half + c.half) % c.half;
+        isoCols.forEach(function (c) {
+          c.off = ((c.off + c.dir * dt * c.period / c.secs) % c.period + c.period) % c.period;
           c.el.style.transform = 'translate3d(0,' + (-c.off).toFixed(1) + 'px,0)';
         });
       }
@@ -214,7 +227,7 @@
         var hp = M.clamp(y / (hero.offsetHeight * 0.9), 0, 1);
         plane.style.setProperty('--ix', (52 - hp * 40).toFixed(2) + 'deg');
         plane.style.setProperty('--iz', (-32 + hp * 26).toFixed(2) + 'deg');
-        plane.style.setProperty('--is', (1.1 + hp * 0.5).toFixed(3));
+        plane.style.setProperty('--is', (1.2 + hp * 0.5).toFixed(3));
         name.style.transform = 'translateY(' + (-hp * 120).toFixed(1) + 'px) scale(' + (1 - hp * 0.12).toFixed(3) + ')';
         updateFlow(y);
         var fp = M.pass(foldSec, y);
@@ -228,7 +241,7 @@
       window.addEventListener('resize', function () {
         if (innerWidth === lastW) { M.refresh(); return; }
         lastW = innerWidth;
-        layoutFlow(); renderRows(); M.refresh();
+        buildIso(); layoutFlow(); renderRows(); M.refresh();
       });
     }
 
