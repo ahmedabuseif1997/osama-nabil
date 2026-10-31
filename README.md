@@ -70,8 +70,14 @@ For a custom domain: `SITE_URL=https://example.com/ python3 tools/prerender.py`.
 3. Delete the other `design-N/` folders and `assets/img/previews/`.
 4. Run `python3 tools/prerender.py` (canonical URLs then point to the root).
 
-## Deploy (GitHub Pages)
+## Deploy (Vercel)
 
-1. Merge into `main`.
-2. Repo **Settings → Pages → Source: GitHub Actions**.
-3. The `Deploy to GitHub Pages` workflow publishes on every push to `main`.
+Static site, no build step. `vercel.json` sets clean URLs with trailing slashes (needed for the
+`design-N/` folders), security headers and asset caching; `.vercelignore` keeps `tools/` and this README out of the deploy.
+
+1. vercel.com → **Add New… → Project** → import `ahmedabuseif1997/osama-nabil`.
+2. Framework preset **Other**, leave Build Command and Output Directory empty → **Deploy**.
+3. Every push gets its own preview URL (e.g. `…vercel.app/design-6/`); `main` is production.
+4. Domain: Project → **Settings → Domains** → add the domain and set the DNS records Vercel shows.
+5. Point SEO at the domain: `SITE_URL=https://your-domain.com/ python3 tools/prerender.py`, commit, push
+   (canonical URLs, Open Graph image, JSON-LD, `sitemap.xml`, `robots.txt`, `llms.txt`).
