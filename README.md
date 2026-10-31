@@ -47,7 +47,7 @@ For a custom domain: `SITE_URL=https://example.com/ python3 tools/prerender.py`.
 - Sticky "Start your project" bar after the hero, hidden while the brief is on screen.
 
 **Web3Forms key:** go to web3forms.com, enter `osamanabil419700@gmail.com`, copy the access key from the email, and
-put it in `assets/js/core.js` → `profile.formKey`.
+put it in `assets/js/core.js` → `profile.formKey` (set; Web3Forms keys are public by design and only allow sending to the registered inbox).
 
 ## Editing
 
