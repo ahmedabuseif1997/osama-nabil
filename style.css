@@ -180,3 +180,16 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 /* Arabic: outlined or semi-transparent text shows seams where letters join, so use solid, opaque colours. */
 [dir="rtl"] .hero__l2 { color: var(--accent); -webkit-text-stroke: 0; }
 [dir="rtl"] .kinetic__row--alt { color: #55524d; -webkit-text-stroke: 0; }
+
+/* Phones held sideways: short screen — shrink the name and hide the long intro so the CTA stays on the first screen. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero__content { padding-top: 62px; padding-bottom: 14px; }
+  .hero__name { font-size: 20vh; margin-bottom: 8px; }
+  [dir="rtl"] .hero__name { font-size: 18vh; }
+  .hero__panel { grid-template-columns: 1fr; gap: 6px; }
+  .hero__panel .kicker { margin-bottom: 2px; }
+  .hero__title { font-size: 24px; }
+  .hero__lead { display: none; }
+  .hero__ctas { margin-top: 8px; }
+  .hero__ctas .btn { min-height: 44px; padding: 0 20px; }
+}

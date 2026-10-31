@@ -16,9 +16,11 @@
     document.querySelector('.hero__name').setAttribute('aria-label', PF.name());
   }
 
-  /* Phones get one image per project: a lighter 3D layer that iOS Safari keeps animating. */
+  /* Touch devices (phones and tablets, iOS and Android) and small screens get one image per project:
+     a lighter 3D layer that mobile browsers keep animating smoothly. */
+  var touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
   function buildIso() {
-    var picks = [], perProject = innerWidth < 640 ? 1 : 2;
+    var picks = [], perProject = touch || innerWidth < 1024 ? 1 : 2;
     PF.projects.forEach(function (p) { p.images.slice(0, perProject).forEach(function (im) { picks.push(PF.img(p.slug, im[0])); }); });
     var cols = 6, per = Math.ceil(picks.length / cols), html = '';
     for (var c = 0; c < cols; c++) {
@@ -221,7 +223,13 @@
         var lit = Math.round(rp * readWords.length);
         readWords.forEach(function (w, i) { w.classList.toggle('on', i < lit); w.classList.toggle('now', i === lit - 1 && lit < readWords.length); });
       });
-      window.addEventListener('resize', function () { layoutFlow(); renderRows(); M.refresh(); });
+      /* Mobile browsers fire resize when the address bar shows/hides; only re-layout when the width changes. */
+      var lastW = innerWidth;
+      window.addEventListener('resize', function () {
+        if (innerWidth === lastW) { M.refresh(); return; }
+        lastW = innerWidth;
+        layoutFlow(); renderRows(); M.refresh();
+      });
     }
 
     PF.onLang(function () {
