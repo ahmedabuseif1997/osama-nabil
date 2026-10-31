@@ -73,24 +73,6 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 .kinetic__row--alt { color: transparent; -webkit-text-stroke: 1.5px rgba(244, 239, 230, .55); }
 [dir="rtl"] .kinetic__row { text-transform: none; font-size: clamp(32px, 5vw, 80px); line-height: 1.35; }
 
-/* Country names: grey fill with a flag-coloured outline (stylised stripes / hoist bands, no emblems).
-   The flag gradient is clipped to the text plus a wide transparent stroke; a grey copy (::before) sits on
-   top, so only the outer edge shows the flag. Stops follow where letters sit (Arabic ink ≈ 34–83% of the
-   line, Latin ≈ 10–100%). */
-.kinetic__row .flag { position: relative; font-weight: inherit; color: transparent; -webkit-text-stroke: 7px transparent; -webkit-background-clip: text; background-clip: text; }
-.kinetic__row .flag::before { content: attr(data-t); position: absolute; inset: 0; color: #55524d; -webkit-text-stroke: 0; background: none; }
-.flag--eg { background-image: linear-gradient(180deg, #ce1126 0 40%, #ffffff 40% 70%, #000000 70%); }
-.flag--sa { background-image: linear-gradient(180deg, #006c35 0 74%, #ffffff 74% 80%, #006c35 80%); }
-.flag--ae { background-image: linear-gradient(90deg, #ff0000 0 25%, transparent 25%), linear-gradient(180deg, #00732f 0 40%, #ffffff 40% 70%, #000000 70%); }
-.flag--om { background-image: linear-gradient(90deg, #db161b 0 25%, transparent 25%), linear-gradient(180deg, #ffffff 0 40%, #db161b 40% 70%, #008000 70%); }
-.flag--qa { background-image: linear-gradient(90deg, #ffffff 0 32%, #8a1538 32%); }
-[dir="rtl"] .flag--eg { background-image: linear-gradient(180deg, #ce1126 0 50%, #ffffff 50% 63%, #000000 63%); }
-[dir="rtl"] .flag--sa { background-image: linear-gradient(180deg, #006c35 0 70%, #ffffff 70% 75%, #006c35 75%); }
-[dir="rtl"] .flag--ae { background-image: linear-gradient(90deg, #ff0000 0 25%, transparent 25%), linear-gradient(180deg, #00732f 0 50%, #ffffff 50% 63%, #000000 63%); }
-[dir="rtl"] .flag--om { background-image: linear-gradient(90deg, #db161b 0 25%, transparent 25%), linear-gradient(180deg, #ffffff 0 50%, #db161b 50% 63%, #008000 63%); }
-[dir="rtl"] .kinetic__row .flag { -webkit-text-stroke-width: 5px; }
-@media (max-width: 640px) { .kinetic__row .flag, [dir="rtl"] .kinetic__row .flag { -webkit-text-stroke-width: 4px; } }
-
 /* Coverflow */
 .flow { position: relative; height: 700vh; }
 .flow__stage { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; padding: 84px 0 26px; }

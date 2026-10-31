@@ -33,10 +33,9 @@
   function renderRows() {
     var words1 = SERVICES.map(PF.catLabel), words2 = PF.profile.markets.map(PF.countryLabel);
     rows = [document.getElementById('row1'), document.getElementById('row2')];
-    var flags = PF.profile.markets, rtl = document.documentElement.dir === 'rtl';
+    var rtl = document.documentElement.dir === 'rtl';
     [words1, words2].forEach(function (words, i) {
-      /* Country names (second row) are filled with their flag colours; the star stays outside the flag. */
-      var items = words.map(function (w, k) { return '<span>' + (i ? '<b class="flag flag--' + flags[k] + '" data-t="' + esc(w) + '">' + esc(w) + '</b>' : esc(w)) + '</span>'; });
+      var items = words.map(function (w) { return '<span>' + esc(w) + '</span>'; });
       /* Rows are laid out left-to-right, so Arabic gets the items reversed to read in order from the right. */
       if (rtl) items.reverse();
       var chunk = items.join('');
