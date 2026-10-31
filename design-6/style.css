@@ -55,7 +55,7 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 .hero__content { position: relative; z-index: 2; min-height: 100vh; min-height: 100svh; max-width: var(--max); margin: 0 auto; display: flex; flex-direction: column; justify-content: flex-end; padding: 110px clamp(16px, 3vw, 40px) 44px; }
 .hero__name { display: grid; font-size: clamp(84px, 17vw, 270px); line-height: .84; letter-spacing: .01em; margin-bottom: 26px; will-change: transform; }
 [dir="rtl"] .hero__name { line-height: 1.15; font-size: clamp(76px, 15vw, 230px); }
-.hero__l2 { color: transparent; -webkit-text-stroke: 2px var(--accent); }
+.hero__l2 { color: transparent; -webkit-text-stroke: clamp(2.5px, .32vw, 4.5px) var(--accent); }
 .hero__panel { display: grid; grid-template-columns: 1.1fr 1fr; gap: 10px 40px; align-items: end; }
 .hero__panel .kicker { grid-column: 1 / -1; }
 .hero__title { margin: 0; font-family: var(--display); text-transform: uppercase; font-size: clamp(30px, 3.4vw, 50px); line-height: 1.02; }
@@ -82,7 +82,7 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 .flow__hint { margin: 0; color: var(--muted); max-width: 300px; font-size: 15px; }
 .flow__scene { position: relative; perspective: 1300px; }
 .flow__track { position: absolute; top: 50%; left: 0; display: flex; gap: 2vw; direction: ltr; transform-style: preserve-3d; will-change: transform; }
-.flow__card { position: relative; flex: 0 0 auto; width: var(--cw, 360px); aspect-ratio: 4 / 5; padding: 0; border: 0; border-radius: 18px; overflow: hidden; background: var(--card); cursor: pointer; color: var(--fg); text-align: start; font: inherit; box-shadow: 0 30px 70px rgba(0, 0, 0, .6); will-change: transform; transform: translateY(-50%); }
+.flow__card { position: relative; flex: 0 0 auto; width: var(--cw, 360px); height: var(--ch, 450px); padding: 0; border: 0; border-radius: 18px; overflow: hidden; background: var(--card); cursor: pointer; color: var(--fg); text-align: start; font: inherit; box-shadow: 0 30px 70px rgba(0, 0, 0, .6); will-change: transform; transform: translateY(-50%); }
 .flow__card img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
 .flow__card:hover img { transform: scale(1.06); }
 .flow__card figcaption { position: absolute; inset: auto 0 0; padding: 50px 18px 16px; background: linear-gradient(to top, rgba(0, 0, 0, .88), transparent); display: grid; gap: 2px; }
@@ -149,7 +149,7 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 .rm .flow__stage { position: relative; height: auto; display: block; overflow: visible; }
 .rm .flow__scene { perspective: none; }
 .rm .flow__track { position: static; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; padding: 24px clamp(16px, 3vw, 40px) 0; transform: none !important; }
-.rm .flow__card { width: auto; transform: none !important; }
+.rm .flow__card { width: auto; height: auto; aspect-ratio: 4 / 3; transform: none !important; }
 .rm .flow__foot, .rm .flow__hint { display: none; }
 .rm .row, .rm .reveal { opacity: 1; transform: none; transition: none; }
 .rm .fold__panel { transform: none; opacity: 1; }
@@ -173,6 +173,10 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
   .hero__name { margin-bottom: 14px; }
   .hero__lead { font-size: 15px; }
   .flow { height: 560vh; }
+  .flow__card figcaption { padding: 34px 12px 10px; }
+  .flow__card figcaption b { font-size: 17px; }
+  [dir="rtl"] .flow__card figcaption b { font-size: 16px; line-height: 1.35; }
+  .flow__card figcaption span { font-size: 11px; }
   .fold__set { grid-template-columns: 1fr; }
   .fold__panel { min-height: 180px; }
 }

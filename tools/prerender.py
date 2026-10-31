@@ -33,6 +33,7 @@ SOCIAL = [('whatsapp', WHATSAPP, 'WhatsApp'),
           ('facebook', 'https://www.facebook.com/anaosama.nabil', 'Facebook'),
           ('gmail', 'mailto:' + EMAIL, 'Gmail')]
 SAME_AS = [u for k, u, _ in SOCIAL if k in ('instagram', 'behance', 'facebook')]
+CURRENCIES = ['EGP', 'SAR', 'AED', 'OMR', 'QAR', 'USD']  # market order, then USD
 
 
 def load_js_json(path, var):
@@ -124,7 +125,9 @@ def p_brief(base=''):
         '<div class="brief__nav">%s</div></fieldset>'
         '<fieldset class="brief__step" hidden><legend data-i18n="brief.q2">%s</legend>'
         '<div class="brief__chips" data-group="timeline">%s</div>'
-        '<div class="brief__field"><label for="bf-budget" data-i18n="brief.budget">%s</label><input id="bf-budget" name="budget" type="text" placeholder="%s" data-i18n-ph="brief.budgetPh"></div>'
+        '<div class="brief__field"><label for="bf-budget" data-i18n="brief.budget">%s</label><div class="brief__money">'
+        '<input id="bf-budget" name="budget" type="text" inputmode="numeric" placeholder="%s" data-i18n-ph="brief.budgetPh">'
+        '<select name="currency" aria-label="%s" data-i18n-aria="brief.currency">%s</select></div></div>'
         '<p class="brief__err" role="alert"></p><div class="brief__nav">%s%s</div></fieldset>'
         '<fieldset class="brief__step" hidden><legend data-i18n="brief.q3">%s</legend>%s%s%s%s'
         '<p class="brief__err" role="alert"></p><div class="brief__nav">%s'
@@ -140,7 +143,9 @@ def p_brief(base=''):
            e(t('brief.alt')), EMAIL, EMAIL, e(t('brief.wa')), WHATSAPP, PHONE_DISPLAY, e(t('brief.title')),
            e(t('brief.step')), e(t('brief.of')),
            e(t('brief.q1')), i18n('p', 'brief.q1h', 'brief__hint'), services, nav_next,
-           e(t('brief.q2')), times, e(t('brief.budget')), e(t('brief.budgetPh')), nav_back, nav_next,
+           e(t('brief.q2')), times, e(t('brief.budget')), e(t('brief.budgetPh')), e(t('brief.currency')),
+           ''.join('<option value="%s" data-i18n="cur.%s">%s</option>' % (c, c, e(t('cur.' + c))) for c in CURRENCIES),
+           nav_back, nav_next,
            e(t('brief.q3')),
            field('name', 'brief.name', required=True, auto='name'),
            field('contact', 'brief.contact', required=True, auto='email', mode='email'),

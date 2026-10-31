@@ -94,7 +94,7 @@ window.PORTFOLIO_STRINGS = {
   "brief.t3": "In 1–3 months",
   "brief.t4": "Just exploring",
   "brief.budget": "Budget (optional)",
-  "brief.budgetPh": "e.g. 5,000 AED",
+  "brief.budgetPh": "e.g. 5,000",
   "brief.q3": "Where can I reach you?",
   "brief.name": "Your name",
   "brief.contact": "Email or WhatsApp number",
@@ -150,7 +150,14 @@ window.PORTFOLIO_STRINGS = {
   "cbar.text": "Message me on WhatsApp, send an email, or follow my latest work.",
   "brief.wa": "or WhatsApp",
   "cbar.email": "Email",
-  "cbar.phone": "WhatsApp / Phone"
+  "cbar.phone": "WhatsApp / Phone",
+  "brief.currency": "Currency",
+  "cur.EGP": "EGP — Egyptian pound",
+  "cur.SAR": "SAR — Saudi riyal",
+  "cur.AED": "AED — UAE dirham",
+  "cur.OMR": "OMR — Omani rial",
+  "cur.QAR": "QAR — Qatari riyal",
+  "cur.USD": "USD — US dollar"
  },
  "ar": {
   "meta.title": "أسامة نبيل — مصمم جرافيك وهويات بصرية",
@@ -246,7 +253,7 @@ window.PORTFOLIO_STRINGS = {
   "brief.t3": "خلال 1–3 أشهر",
   "brief.t4": "أستكشف فقط",
   "brief.budget": "الميزانية (اختياري)",
-  "brief.budgetPh": "مثال: 5,000 درهم",
+  "brief.budgetPh": "مثال: 5,000",
   "brief.q3": "كيف أتواصل معك؟",
   "brief.name": "اسمك",
   "brief.contact": "البريد أو رقم واتساب",
@@ -302,6 +309,13 @@ window.PORTFOLIO_STRINGS = {
   "cbar.text": "راسلني على واتساب أو البريد، أو تابع أحدث أعمالي.",
   "brief.wa": "أو واتساب",
   "cbar.email": "البريد",
-  "cbar.phone": "واتساب / هاتف"
+  "cbar.phone": "واتساب / هاتف",
+  "brief.currency": "العملة",
+  "cur.EGP": "جنيه مصري (EGP)",
+  "cur.SAR": "ريال سعودي (SAR)",
+  "cur.AED": "درهم إماراتي (AED)",
+  "cur.OMR": "ريال عُماني (OMR)",
+  "cur.QAR": "ريال قطري (QAR)",
+  "cur.USD": "دولار أمريكي (USD)"
  }
 };

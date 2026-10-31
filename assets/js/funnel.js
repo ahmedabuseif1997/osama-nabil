@@ -87,7 +87,7 @@
     var rows = [
       ['brief.f.services', services.join(PF.lang === 'ar' ? '، ' : ', ')],
       ['brief.f.timeline', time ? labelFor(time) : ''],
-      ['brief.f.budget', form.elements.budget.value.trim()],
+      ['brief.f.budget', form.elements.budget.value.trim() ? form.elements.budget.value.trim() + ' ' + form.elements.currency.value : ''],
       ['brief.f.name', form.elements.name.value.trim()],
       ['brief.f.contact', form.elements.contact.value.trim()],
       ['brief.f.company', form.elements.company.value.trim()],

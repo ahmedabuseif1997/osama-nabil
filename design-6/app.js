@@ -77,23 +77,31 @@
     lastNow = -1;
   }
 
+  /* Each card takes its cover's own proportions (fixed height), so the image fills it without cropping. */
   function layoutFlow() {
-    var vw = innerWidth;
-    fgeo.cw = vw < 640 ? Math.round(vw * 0.66) : Math.round(Math.max(260, Math.min(400, vw * 0.27)));
+    var vw = innerWidth, vh = innerHeight, mobile = vw < 640;
+    var h = mobile ? Math.min(vh * 0.46, vw * 0.9) : Math.max(300, Math.min(540, vh * 0.56));
+    var maxW = mobile ? vw * 0.86 : vw * 0.5, left = 0;
     fgeo.gap = vw * 0.02;
-    cards.forEach(function (c) { c.style.setProperty('--cw', fgeo.cw + 'px'); });
-    fgeo.total = list.length * (fgeo.cw + fgeo.gap) - fgeo.gap;
-    if (!M.reduce) flow.style.height = (list.length * (vw < 640 ? 26 : 32) + 100) + 'vh';
+    fgeo.centers = [];
+    cards.forEach(function (c, i) {
+      var im = list[i].images[0], a = M.clamp(im[1] / im[2], 0.6, 2);
+      var w = Math.min(h * a, maxW);
+      c.style.setProperty('--cw', Math.round(w) + 'px');
+      c.style.setProperty('--ch', Math.round(w / a) + 'px');
+      fgeo.centers.push(left + w / 2);
+      left += w + fgeo.gap;
+    });
+    if (!M.reduce) flow.style.height = (list.length * (mobile ? 26 : 32) + 100) + 'vh';
   }
 
   function updateFlow(y) {
-    var p = M.progress(flow, y), vw = innerWidth;
-    var start = vw / 2 - fgeo.cw / 2, end = vw / 2 - (fgeo.total - fgeo.cw / 2);
-    var x = start + (end - start) * p;
+    var p = M.progress(flow, y), vw = innerWidth, c = fgeo.centers;
+    var x = vw / 2 - (c[0] + (c[c.length - 1] - c[0]) * p);
     track.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0)';
     var now = 0, best = 1e9;
     for (var i = 0; i < cards.length; i++) {
-      var cx = x + i * (fgeo.cw + fgeo.gap) + fgeo.cw / 2 - vw / 2;
+      var cx = x + c[i] - vw / 2;
       var n = M.clamp(cx / (vw * 0.5), -1.6, 1.6);
       if (Math.abs(cx) > vw * 1.2) { cards[i].style.visibility = 'hidden'; continue; }
       cards[i].style.visibility = 'visible';

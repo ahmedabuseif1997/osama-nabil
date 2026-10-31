@@ -95,6 +95,11 @@
 .brief__field textarea { min-height: 96px; resize: vertical; }
 .brief__field input:focus, .brief__field textarea:focus { outline: none; border-color: var(--f-accent); }
 .brief__field [aria-invalid="true"] { border-color: #ff5a5a; }
+.brief__money { display: flex; gap: 8px; }
+.brief__money input { flex: 1 1 auto; min-width: 0; }
+.brief__money select { flex: 0 0 auto; max-width: 52%; min-height: 48px; padding: 0 12px; border-radius: 12px; border: 1.5px solid var(--f-line); background: var(--f-card); color: inherit; font: inherit; font-size: 15px; cursor: pointer; }
+.brief__money select:focus { outline: none; border-color: var(--f-accent); }
+.brief__money option { color: #111; background: #fff; }
 .brief__err { min-height: 1.4em; margin: 8px 0 0; color: #ff6b6b; font-size: 14px; font-weight: 600; }
 .brief__nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; margin-top: 18px; }
 .brief__nav .f-btn:only-child { margin-inline-start: auto; }
