@@ -62,7 +62,9 @@
 .brief__grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: clamp(24px, 4vw, 64px); align-items: start; }
 .brief__lead { color: var(--f-muted); font-size: 17px; margin: 18px 0 22px; max-width: 480px; }
 .brief__person { display: flex; align-items: center; gap: 14px; margin: 0 0 18px; }
-.brief__person img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; border: 2px solid var(--f-accent); }
+.brief__person img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; border: 3px solid var(--f-accent); }
+.brief__person b { font-size: 18px; }
+@media (max-width: 640px) { .brief__person img { width: 84px; height: 84px; } }
 .brief__person p { margin: 0; display: grid; line-height: 1.35; }
 .brief__person span { color: var(--f-muted); font-size: 15px; }
 .brief__trust { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
