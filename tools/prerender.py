@@ -12,7 +12,7 @@ For each page that contains the markers below it:
 and regenerates robots.txt, sitemap.xml and llms.txt at the repo root.
 
 Run after any content change:  python3 tools/prerender.py
-Set SITE_URL to the final address (default: the GitHub Pages URL of this repo).
+SITE_URL defaults to the production domain, https://www.osamanabil.com/.
 """
 import datetime
 import html
@@ -21,7 +21,7 @@ import os
 import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE_URL = os.environ.get('SITE_URL', 'https://ahmedabuseif1997.github.io/osama-nabil/').rstrip('/') + '/'
+SITE_URL = os.environ.get('SITE_URL', 'https://www.osamanabil.com/').rstrip('/') + '/'
 EMAIL = 'osamanabil419700@gmail.com'
 NAME_EN, NAME_AR = 'Osama Nabil', 'أسامة نبيل'
 SERVICES = ['branding', 'social', 'print', 'profile', 'type']
@@ -130,13 +130,17 @@ def p_brief(base=''):
         '<select name="currency" aria-label="%s" data-i18n-aria="brief.currency">%s</select></div></div>'
         '<div class="brief__nav">%s%s</div></fieldset>'
         '<fieldset class="brief__step" hidden><legend data-i18n="brief.q3">%s</legend>%s%s%s%s'
-        '<p class="brief__err" role="alert"></p><div class="brief__nav">%s'
-        '<button type="submit" class="f-btn"><span data-i18n="brief.send">%s</span> <span class="arr" aria-hidden="true">→</span></button></div></fieldset>'
-        '<div class="brief__done" hidden><h3 tabindex="-1" data-i18n="brief.doneT">%s</h3>'
-        '<p><span data-i18n="brief.doneP">%s</span> <a data-email data-email-text href="mailto:%s">%s</a></p>'
+        '<input type="checkbox" name="botcheck" class="brief__hp" tabindex="-1" autocomplete="off" aria-hidden="true">'
+        '<p class="brief__err" role="alert"></p><div class="brief__nav brief__nav--send">%s'
+        '<button type="submit" class="f-btn f-btn--ghost" data-via="email"><span data-i18n="brief.sendMail">%s</span></button>'
+        '<button type="submit" class="f-btn f-btn--wa" data-via="whatsapp">%s<span data-i18n="brief.sendWa">%s</span></button></div></fieldset>'
+        '<div class="brief__done" hidden><h3 tabindex="-1" class="brief__doneT" data-i18n="brief.doneT">%s</h3>'
+        '<p class="brief__doneP" data-i18n="brief.doneP">%s</p>'
+        '<div class="brief__manual"><p class="brief__links"><a data-email data-email-text href="mailto:%s">%s</a> · '
+        '<a href="%s" target="_blank" rel="noopener" dir="ltr">%s</a></p>'
         '<textarea class="brief__out" readonly aria-label="Brief"></textarea>'
-        '<div class="brief__nav"><button type="button" class="f-btn" data-copy data-i18n="brief.copy">%s</button>'
-        '<button type="button" class="f-btn f-btn--ghost" data-again data-i18n="brief.again">%s</button></div></div>'
+        '<button type="button" class="f-btn" data-copy data-i18n="brief.copy">%s</button></div>'
+        '<div class="brief__nav"><button type="button" class="f-btn f-btn--ghost" data-again data-i18n="brief.again">%s</button></div></div>'
         '</form></div></section>'
         % (i18n('p', 'brief.kicker', 'f-kicker'), e(t('brief.title')), i18n('p', 'brief.lead', 'brief__lead'),
            base, NAME_EN, NAME_EN, e(t('brief.person')), trust,
@@ -151,8 +155,8 @@ def p_brief(base=''):
            field('contact', 'brief.contact', required=True, auto='email', mode='email'),
            field('company', 'brief.company', auto='organization'),
            field('details', 'brief.details', kind='textarea'),
-           nav_back, e(t('brief.send')),
-           e(t('brief.doneT')), e(t('brief.doneP')), EMAIL, EMAIL, e(t('brief.copy')), e(t('brief.again'))))
+           nav_back, e(t('brief.sendMail')), icon('whatsapp', 20), e(t('brief.sendWa')),
+           e(t('brief.doneT')), e(t('brief.doneP')), EMAIL, EMAIL, WHATSAPP, PHONE_DISPLAY, e(t('brief.copy')), e(t('brief.again'))))
 
 
 def p_sticky(base=''):

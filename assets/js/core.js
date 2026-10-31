@@ -13,6 +13,8 @@
       instagram: 'https://www.instagram.com/osamanabiill/',
       facebook: 'https://www.facebook.com/anaosama.nabil'
     },
+    /* Web3Forms access key (web3forms.com, tied to the email above). Empty = "Send by email" opens the visitor's email app. */
+    formKey: '',
     years: 8,
     /* Markets in display order. */
     markets: ['eg', 'sa', 'ae', 'om', 'qa']

@@ -104,6 +104,18 @@
 .brief__err { min-height: 1.4em; margin: 8px 0 0; color: #ff6b6b; font-size: 14px; font-weight: 600; }
 .brief__nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; margin-top: 18px; }
 .brief__nav .f-btn:only-child { margin-inline-start: auto; }
+.f-btn--wa { background: #25d366; color: #fff; }
+.f-btn--wa svg { flex: 0 0 auto; }
+.f-btn[disabled] { opacity: .65; cursor: progress; }
+.brief__nav--send { align-items: center; }
+.brief__nav--send .f-btn--wa { margin-inline-start: auto; }
+/* Honeypot: invisible to people, ticked only by bots. */
+.brief__hp { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; inset-inline-start: -9999px; }
+.brief__manual { display: grid; gap: 12px; }
+.brief__manual[hidden] { display: none; }
+.brief__links { margin: 0; font-weight: 700; }
+.brief__links a { color: inherit; }
+.brief__manual .f-btn { justify-self: start; }
 .brief__done h3 { margin: 0 0 8px; font-family: var(--f-display); font-size: clamp(22px, 2.6vw, 30px); outline: none; }
 .brief__done p { color: var(--f-muted); margin: 0 0 12px; }
 .brief__done a { color: inherit; font-weight: 700; overflow-wrap: anywhere; }

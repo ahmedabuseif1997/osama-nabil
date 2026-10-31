@@ -64,20 +64,69 @@
       steps[cur].querySelectorAll('.brief__chips.is-invalid').forEach(function (g) { g.classList.remove('is-invalid'); });
     });
 
+    /* Result panel: title/text keys, and whether the copy-and-send-yourself block is needed. */
+    function finish(titleKey, textKey, manual) {
+      var h = done.querySelector('.brief__doneT'), p = done.querySelector('.brief__doneP');
+      h.setAttribute('data-i18n', titleKey); h.textContent = PF.t(titleKey);
+      p.setAttribute('data-i18n', textKey); p.textContent = PF.t(textKey);
+      done.querySelector('.brief__manual').hidden = !manual;
+      if (done.hidden) {
+        steps.forEach(function (s) { s.hidden = true; });
+        form.querySelector('.brief__progress').hidden = true;
+        done.hidden = false;
+        h.focus();
+      }
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!valid(steps[cur])) return;
+      var btn = e.submitter, via = (btn && btn.getAttribute('data-via')) || 'whatsapp';
       var text = compose(form);
-      out.value = text;
       var subject = PF.t('brief.subject') + ' — ' + (form.elements.name.value.trim() || '');
-      window.location.href = 'mailto:' + PF.profile.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
-      steps.forEach(function (s) { s.hidden = true; });
-      form.querySelector('.brief__progress').hidden = true;
-      done.hidden = false;
-      done.querySelector('h3').focus();
+      out.value = text;
+      if (via === 'whatsapp') {
+        /* Open WhatsApp first (still inside the click), then email a copy in the background. */
+        window.open(PF.profile.whatsapp + '?text=' + encodeURIComponent(subject + '\n\n' + text), '_blank', 'noopener');
+        finish('brief.waT', 'brief.waP', true);
+        sendEmail(form, subject, text).then(function (ok) { if (ok) finish('brief.waT', 'brief.waOk', false); });
+        return;
+      }
+      if (!PF.profile.formKey) { openMail(subject, text); finish('brief.doneT', 'brief.doneP', true); return; }
+      var label = btn.innerHTML;
+      btn.disabled = true;
+      btn.textContent = PF.t('brief.sending');
+      sendEmail(form, subject, text).then(function (ok) {
+        btn.disabled = false;
+        btn.innerHTML = label;
+        if (ok) finish('brief.mailOkT', 'brief.mailOkP', false);
+        else { openMail(subject, text); finish('brief.doneT', 'brief.doneP', true); }
+      });
     });
 
     show(0);
+  }
+
+  function openMail(subject, text) {
+    window.location.href = 'mailto:' + PF.profile.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
+  }
+
+  /* Delivers the brief to Osama's inbox through Web3Forms. Resolves true when delivered (or when the
+     hidden anti-spam box was ticked, so bots get no signal), false when there is no key or it failed. */
+  function sendEmail(form, subject, text) {
+    var key = PF.profile.formKey;
+    if (!key) return Promise.resolve(false);
+    if (form.elements.botcheck && form.elements.botcheck.checked) return Promise.resolve(true);
+    var contact = form.elements.contact.value.trim();
+    var body = { access_key: key, subject: subject, from_name: 'osamanabil.com', name: form.elements.name.value.trim(), message: text };
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) body.replyto = contact;
+    return fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function (r) { return r.json(); })
+      .then(function (j) { return !!(j && j.success); })
+      .catch(function () { return false; });
   }
 
   function labelFor(input) {
