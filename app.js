@@ -16,16 +16,44 @@
     document.querySelector('.hero__name').setAttribute('aria-label', PF.name());
   }
 
+  /* Phones get one image per project: a lighter 3D layer that iOS Safari keeps animating. */
   function buildIso() {
-    var picks = [];
-    PF.projects.forEach(function (p) { p.images.slice(0, 2).forEach(function (im) { picks.push(PF.img(p.slug, im[0])); }); });
+    var picks = [], perProject = innerWidth < 640 ? 1 : 2;
+    PF.projects.forEach(function (p) { p.images.slice(0, perProject).forEach(function (im) { picks.push(PF.img(p.slug, im[0])); }); });
     var cols = 6, per = Math.ceil(picks.length / cols), html = '';
     for (var c = 0; c < cols; c++) {
       var col = picks.slice(c * per, c * per + per);
-      var imgs = col.map(function (src) { return '<img alt="" loading="lazy" src="' + src + '">'; }).join('');
+      var imgs = col.map(function (src) { return '<img alt="" decoding="async" src="' + src + '">'; }).join('');
       html += '<div class="iso__col">' + imgs + imgs + '</div>';
     }
     document.getElementById('iso').innerHTML = html;
+  }
+
+  /* Column drift is driven from JS (CSS animations on this large 3D layer freeze in iOS Safari).
+     Each column holds its images twice, so shifting by half its height loops seamlessly. */
+  function animateIso() {
+    var hero = document.getElementById('hero');
+    var cols = Array.prototype.map.call(document.querySelectorAll('.iso__col'), function (el, i) {
+      return { el: el, dir: i % 2 ? -1 : 1, secs: i % 2 ? 70 : 60, off: 0, half: 0 };
+    });
+    function measure() { cols.forEach(function (c) { c.half = c.el.scrollHeight / 2; }); }
+    measure();
+    window.addEventListener('load', measure);
+    window.addEventListener('resize', measure);
+    document.querySelectorAll('.iso__col img').forEach(function (im) { im.addEventListener('load', measure); });
+    var last = performance.now();
+    (function frame(now) {
+      var dt = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      if (window.scrollY < hero.offsetHeight * 1.2) {
+        cols.forEach(function (c) {
+          if (!c.half) return;
+          c.off = ((c.off + c.dir * dt * c.half / c.secs) % c.half + c.half) % c.half;
+          c.el.style.transform = 'translate3d(0,' + (-c.off).toFixed(1) + 'px,0)';
+        });
+      }
+      requestAnimationFrame(frame);
+    })(last);
   }
 
   /* ---------- Kinetic rows ---------- */
@@ -179,6 +207,7 @@
 
     if (!M.reduce) {
       animateRows();
+      animateIso();
       M.onScroll(function (y) {
         var hp = M.clamp(y / (hero.offsetHeight * 0.9), 0, 1);
         plane.style.setProperty('--ix', (52 - hp * 40).toFixed(2) + 'deg');
