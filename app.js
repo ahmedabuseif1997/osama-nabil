@@ -20,8 +20,9 @@
      a lighter 3D layer that mobile browsers keep animating smoothly. */
   var touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
   var isoCols = [], ISO_GAP = 18;
-  /* Wall size: width as a multiple of the screen width, column count, and how many screen-lengths of images each column holds. */
-  var ISO = touch ? { wMul: 1.9, wMin: 1500, cols: 6, depth: 5 } : { wMul: 2.6, wMin: 2600, cols: 12, depth: 5 };
+  /* Tiles keep the original size (column width of the original 6-column wall: max(170vw, 1500px) / 6);
+     the wall gets extra columns on both sides and enough repeats to always fill the screen. */
+  var ISO = touch ? { cols: 10, depth: 7 } : { cols: 18, depth: 7 };
 
   /* The tilted wall must cover the whole hero at every moment of the drift. Each column is one set of
      images (period P) repeated k times; drifting by up to P keeps (k-1)P filled, so k is chosen from the
@@ -31,11 +32,19 @@
     var vw = innerWidth, big = Math.max(vw, innerHeight);
     var n = ISO.cols, perProject = touch || vw < 1024 ? 1 : 2, picks = [];
     PF.projects.forEach(function (p) { p.images.slice(0, perProject).forEach(function (im) { picks.push(im.concat(p.slug)); }); });
-    plane.style.width = Math.round(Math.max(ISO.wMul * vw, ISO.wMin)) + 'px';
+    var colW = (Math.max(1.7 * vw, 1500) - 5 * ISO_GAP) / 6;
+    plane.style.width = Math.round(colW * n + ISO_GAP * (n - 1)) + 'px';
     plane.style.gridTemplateColumns = 'repeat(' + n + ', 1fr)';
-    var per = Math.ceil(picks.length / n), sets = [], html = '';
+    /* The 6 centre columns hold exactly the original sets (so the view matches the original wall); extra
+       columns (an even number per side, keeping each column's drift direction) are added on both sides.
+       The repeat count k is even so a set boundary sits at the wall's centre, as in the original 2-copy wall. */
+    var per = Math.ceil(picks.length / 6), side = (n - 6) / 2, sets = [], html = '';
     for (var c = 0; c < n; c++) {
-      var set = picks.slice(c * per, c * per + per);
+      var o = c - side, set = [];
+      /* Side columns repeat the original 6 sets so every column has the same height (a taller column would
+         stretch the wall and shift its centre). */
+      var src = ((o % 6) + 6) % 6;
+      set = picks.slice(src * per, src * per + per);
       if (!set.length) set = picks.slice(0, per);
       sets.push(set.map(function (im) { return '<img alt="" decoding="async" src="' + PF.img(im[4], im[0]) + '" width="' + im[1] + '" height="' + im[2] + '">'; }).join(''));
       html += '<div class="iso__col">' + sets[c] + '</div>';
@@ -48,6 +57,7 @@
     var cols = plane.querySelectorAll('.iso__col'), minP = Infinity;
     cols.forEach(function (el) { minP = Math.min(minP, el.scrollHeight + ISO_GAP); });
     var k = Math.max(4, Math.min(16, Math.ceil(ISO.depth * big / minP) + 2));
+    k += k % 2;
     plane.dataset.repeat = k;
     cols.forEach(function (el, i) { el.innerHTML = new Array(k + 1).join(sets[i]); });
     isoCols = Array.prototype.map.call(cols, function (el, i) {
@@ -227,7 +237,7 @@
         var hp = M.clamp(y / (hero.offsetHeight * 0.9), 0, 1);
         plane.style.setProperty('--ix', (52 - hp * 40).toFixed(2) + 'deg');
         plane.style.setProperty('--iz', (-32 + hp * 26).toFixed(2) + 'deg');
-        plane.style.setProperty('--is', (1.2 + hp * 0.5).toFixed(3));
+        plane.style.setProperty('--is', (1.1 + hp * 0.5).toFixed(3));
         name.style.transform = 'translateY(' + (-hp * 120).toFixed(1) + 'px) scale(' + (1 - hp * 0.12).toFixed(3) + ')';
         updateFlow(y);
         var fp = M.pass(foldSec, y);
