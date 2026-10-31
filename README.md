@@ -61,8 +61,7 @@ put it in `assets/js/core.js` → `profile.formKey`.
 
 ## Deploy (Vercel)
 
-Static site, no build step. `vercel.json` sets clean URLs with trailing slashes (needed for the
-`design-N/` folders), security headers and asset caching; `.vercelignore` keeps `tools/` and this README out of the deploy.
+Static site, no build step. `vercel.json` sets clean URLs, security headers, asset caching and the bare-domain → `www` redirect; `.vercelignore` keeps `tools/` and this README out of the deploy.
 
 1. vercel.com → **Add New… → Project** → import `ahmedabuseif1997/osama-nabil`.
 2. Framework preset **Other**, leave Build Command and Output Directory empty → **Deploy**.
