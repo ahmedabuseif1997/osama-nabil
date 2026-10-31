@@ -66,7 +66,7 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 .hero__panel .f-proof { grid-column: 1 / -1; margin-top: 4px; }
 
 /* Kinetic rows */
-.kinetic { overflow: hidden; padding: clamp(40px, 6vw, 80px) 0; }
+.kinetic { overflow: hidden; direction: ltr; padding: clamp(40px, 6vw, 80px) 0; }
 .kinetic__row { display: flex; width: max-content; direction: ltr; white-space: nowrap; font-family: var(--display); font-size: clamp(64px, 11vw, 170px); line-height: 1.05; text-transform: uppercase; will-change: transform; }
 .kinetic__row span { display: inline-flex; align-items: center; gap: .3em; padding-inline-end: .3em; }
 .kinetic__row span::after { content: '✦'; color: var(--accent); font-size: .5em; }
@@ -130,7 +130,10 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 .read__text .rw { opacity: .16; transition: opacity .25s, color .25s; }
 .read__text .rw.on { opacity: 1; }
 .read__text .rw.now { color: var(--accent); }
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 50px; border-top: 1px solid var(--line); }
+.creds { list-style: none; margin: 34px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.creds li { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-weight: 700; }
+.creds li::before { content: '✦'; color: var(--accent); }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 40px; border-top: 1px solid var(--line); }
 .stats div { padding: 22px 18px 0 0; }
 .stats b { display: block; font-family: 'Anton', sans-serif; font-weight: 400; font-size: clamp(48px, 6vw, 90px); line-height: 1; color: var(--accent); }
 .stats span { color: var(--muted); font-size: 14px; }
@@ -173,3 +176,7 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
   .fold__set { grid-template-columns: 1fr; }
   .fold__panel { min-height: 180px; }
 }
+
+/* Arabic: outlined text shows seams where letters join, so use a solid fill instead. */
+[dir="rtl"] .hero__l2 { color: var(--accent); -webkit-text-stroke: 0; }
+[dir="rtl"] .kinetic__row--alt { color: rgba(244, 239, 230, .3); -webkit-text-stroke: 0; }

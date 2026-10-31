@@ -4,7 +4,18 @@
 
   var profile = {
     name: { en: 'Osama Nabil', ar: 'أسامة نبيل' },
-    email: 'osamanabil419700@gmail.com'
+    email: 'osamanabil419700@gmail.com',
+    phone: '+201005606850',
+    phoneDisplay: '+20 100 560 6850',
+    whatsapp: 'https://wa.me/201005606850',
+    social: {
+      behance: 'https://www.behance.net/osamanabil4197',
+      instagram: 'https://www.instagram.com/osamanabiill/',
+      facebook: 'https://www.facebook.com/anaosama.nabil'
+    },
+    years: 8,
+    /* Markets in display order. */
+    markets: ['eg', 'sa', 'ae', 'om', 'qa']
   };
 
   var strings = window.PORTFOLIO_STRINGS || { en: {}, ar: {} };
@@ -30,10 +41,12 @@
     pick: function (obj) { return obj ? (obj[PF.lang] || obj.en) : ''; },
     img: function (slug, file) { var m = window.PF_IMG_MAP; return (m && m[slug + '/' + file]) || base + 'assets/work/' + slug + '/' + file; },
     cover: function (p) { return PF.img(p.slug, p.images[0][0]); },
-    /* Attributes that show the whole image (no crop) on its own edge colour: class="pf-fit" style="background-color:…". */
+    /* Attributes for a card image that fills its card; the edge colour shows while the image loads. */
     fit: function (p, i) { var im = p.images[i || 0]; return ' class="pf-fit" style="background-color:' + (im[3] || '#111') + '"'; },
     catLabel: function (c) { return PF.t('cat.' + c); },
     countryLabel: function (c) { return c ? PF.t('country.' + c) : ''; },
+    /* Projects shown in the client list (Green Motion and Typography are portfolio-only). */
+    clients: function () { return projects.filter(function (p) { return p.client !== false; }); },
     totalImages: function () { return projects.reduce(function (n, p) { return n + p.images.length; }, 0); },
     onLang: function (fn) { listeners.push(fn); },
     setLang: function (l) {
@@ -68,9 +81,10 @@
       }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
       els.forEach(function (el) { if (!el.classList.contains('is-in')) io.observe(el); });
     },
-    countUp: function (el, to) {
+    countUp: function (el, to, suffix) {
+      suffix = suffix || '';
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduce || !('IntersectionObserver' in window)) { el.textContent = to; return; }
+      if (reduce || !('IntersectionObserver' in window)) { el.textContent = to + suffix; return; }
       el.textContent = '0';
       var io = new IntersectionObserver(function (entries) {
         if (!entries[0].isIntersecting) return;
@@ -78,7 +92,7 @@
         var start = performance.now(), dur = 1200;
         (function tick(now) {
           var k = Math.min(1, (now - start) / dur);
-          el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+          el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))) + (k < 1 ? '' : suffix);
           if (k < 1) requestAnimationFrame(tick);
         })(start);
       }, { threshold: 0.4 });

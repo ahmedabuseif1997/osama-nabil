@@ -20,12 +20,10 @@
   }
 
   function renderStats() {
-    var countries = {};
-    PF.projects.forEach(function (p) { if (p.country) countries[p.country] = 1; });
-    var brands = PF.projects.filter(function (p) { return p.slug !== 'typography'; }).length;
+    var brands = PF.clients().length;
     var data = [
       [brands, 'stats.brands'],
-      [Object.keys(countries).length, 'stats.countries'],
+      [PF.profile.markets.length, 'stats.countries'],
       [PF.totalImages(), 'stats.designs'],
       [SERVICES.length, 'stats.disciplines']
     ];

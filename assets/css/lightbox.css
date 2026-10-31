@@ -37,5 +37,5 @@
 }
 @media (prefers-reduced-motion: reduce) { .pf-lb { animation: none; } }
 
-/* Whole image, never cropped; the inline background-color is the image's own edge colour. */
-img.pf-fit { object-fit: contain !important; }
+/* Project images fill their card edge to edge; the inline background-color (image edge colour) shows while loading. */
+img.pf-fit { object-fit: cover !important; }

@@ -8,9 +8,8 @@
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   function renderTiles() {
-    var countries = [];
-    PF.projects.forEach(function (p) { if (p.country && countries.indexOf(p.country) === -1) countries.push(p.country); });
-    var brands = PF.projects.filter(function (p) { return p.slug !== 'typography'; }).length;
+    var countries = PF.profile.markets;
+    var brands = PF.clients().length;
     var total = PF.totalImages();
     document.getElementById('statBrands').innerHTML = '<b>' + brands + '</b><span>' + esc(PF.t('stats.brands')) + '</span>';
     document.getElementById('statDesigns').innerHTML = '<b>' + total + '</b><span>' + esc(PF.t('stats.designs')) + '</span>';

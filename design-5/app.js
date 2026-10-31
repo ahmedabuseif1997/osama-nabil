@@ -116,11 +116,9 @@
       im.className = 'pf-fit';
       im.style.backgroundColor = edgeOf(picks[i][0], picks[i][1]);
     });
-    var countries = {};
-    PF.projects.forEach(function (p) { if (p.country) countries[p.country] = 1; });
     var data = [
-      [PF.projects.filter(function (p) { return p.slug !== 'typography'; }).length, 'stats.brands'],
-      [Object.keys(countries).length, 'stats.countries'],
+      [PF.clients().length, 'stats.brands'],
+      [PF.profile.markets.length, 'stats.countries'],
       [PF.totalImages(), 'stats.designs'],
       [SERVICES.length, 'stats.disciplines']
     ];

@@ -25,7 +25,14 @@ SITE_URL = os.environ.get('SITE_URL', 'https://ahmedabuseif1997.github.io/osama-
 EMAIL = 'osamanabil419700@gmail.com'
 NAME_EN, NAME_AR = 'Osama Nabil', 'أسامة نبيل'
 SERVICES = ['branding', 'social', 'print', 'profile', 'type']
-COUNTRIES = {'ae': 'United Arab Emirates', 'sa': 'Saudi Arabia', 'om': 'Oman', 'eg': 'Egypt'}
+COUNTRIES = {'eg': 'Egypt', 'sa': 'Saudi Arabia', 'ae': 'United Arab Emirates', 'om': 'Oman', 'qa': 'Qatar'}
+PHONE, PHONE_DISPLAY, WHATSAPP = '+201005606850', '+20 100 560 6850', 'https://wa.me/201005606850'
+SOCIAL = [('whatsapp', WHATSAPP, 'WhatsApp'),
+          ('instagram', 'https://www.instagram.com/osamanabiill/', 'Instagram'),
+          ('behance', 'https://www.behance.net/osamanabil4197', 'Behance'),
+          ('facebook', 'https://www.facebook.com/anaosama.nabil', 'Facebook'),
+          ('gmail', 'mailto:' + EMAIL, 'Gmail')]
+SAME_AS = [u for k, u, _ in SOCIAL if k in ('instagram', 'behance', 'facebook')]
 
 
 def load_js_json(path, var):
@@ -38,7 +45,15 @@ S = load_js_json('assets/js/strings.js', 'PORTFOLIO_STRINGS')
 EN = S['en']
 PROJECTS = load_js_json('assets/js/data.js', 'PORTFOLIO_PROJECTS')
 ORDERED = [p for p in PROJECTS if p['featured']] + [p for p in PROJECTS if not p['featured']]
+CLIENTS = [p for p in PROJECTS if p.get('client') is not False]
 e = html.escape
+FAQ_N = len([k for k in EN if re.match(r'faq\.q\d+$', k)])
+
+
+def icon(name, size=22):
+    svg = open(os.path.join(ROOT, 'assets/img/icons/%s.svg' % name), encoding='utf-8').read()
+    svg = re.sub(r'<title>.*?</title>', '', svg)
+    return svg.replace('<svg role="img"', '<svg aria-hidden="true" focusable="false" width="%d" height="%d" fill="currentColor"' % (size, size))
 
 
 def t(k):
@@ -52,10 +67,10 @@ def i18n(tag, key, cls='', extra=''):
 
 # ---------------------------------------------------------------- partials
 def p_clients(base=''):
-    names = ''.join('<li>%s</li>' % e(p['title']['en']) for p in PROJECTS if p['slug'] != 'typography')
+    names = ''.join('<li>%s</li>' % e(p['title']['en']) for p in CLIENTS)
     return ('<section class="clients" aria-labelledby="clientsTitle"><div class="f-wrap clients__head">'
             '<h2 class="clients__title" id="clientsTitle" data-i18n="clients.title">%s</h2>%s</div>'
-            '<ul class="clients__list" data-clients data-marquee>%s</ul></section>'
+            '<div class="clients__rail"><ul class="clients__list" data-clients data-marquee>%s</ul></div></section>'
             % (e(t('clients.title')), i18n('p', 'clients.kicker', 'clients__kicker'), names))
 
 
@@ -67,7 +82,7 @@ def p_midcta(base=''):
 
 def p_faq(base=''):
     items = ''.join('<details%s><summary data-i18n="faq.q%d">%s</summary><p data-i18n="faq.a%d">%s</p></details>'
-                    % (' open' if i == 1 else '', i, e(t('faq.q%d' % i)), i, e(t('faq.a%d' % i))) for i in range(1, 6))
+                    % (' open' if i == 1 else '', i, e(t('faq.q%d' % i)), i, e(t('faq.a%d' % i))) for i in range(1, FAQ_N + 1))
     return ('<section class="faq f-wrap" id="faq" aria-labelledby="faqTitle"><div class="faq__grid"><div>%s'
             '<h2 class="f-h2" id="faqTitle" data-i18n="faq.title">%s</h2></div><div class="faq__list">%s</div></div></section>'
             % (i18n('p', 'faq.kicker', 'f-kicker'), e(t('faq.title')), items))
@@ -100,7 +115,8 @@ def p_brief(base=''):
         '<div class="brief__person"><img src="%sassets/img/avatar.webp" width="96" height="96" alt="%s" loading="lazy">'
         '<p><b>%s</b><span data-i18n="brief.person">%s</span></p></div>'
         '<ul class="brief__trust">%s</ul>'
-        '<p class="brief__alt"><span data-i18n="brief.alt">%s</span> <a data-email data-email-text href="mailto:%s">%s</a></p></div>'
+        '<p class="brief__alt"><span data-i18n="brief.alt">%s</span> <a data-email data-email-text href="mailto:%s">%s</a> '
+        '<span data-i18n="brief.wa">%s</span> <a href="%s" target="_blank" rel="noopener" dir="ltr">%s</a></p></div>'
         '<form class="brief__form" novalidate aria-label="%s">'
         '<div class="brief__progress" aria-live="polite"><span><span data-i18n="brief.step">%s</span> <b class="brief__n">1</b> <span data-i18n="brief.of">%s</span> 3</span><i><b></b></i></div>'
         '<fieldset class="brief__step is-active"><legend data-i18n="brief.q1">%s</legend>%s'
@@ -121,7 +137,7 @@ def p_brief(base=''):
         '</form></div></section>'
         % (i18n('p', 'brief.kicker', 'f-kicker'), e(t('brief.title')), i18n('p', 'brief.lead', 'brief__lead'),
            base, NAME_EN, NAME_EN, e(t('brief.person')), trust,
-           e(t('brief.alt')), EMAIL, EMAIL, e(t('brief.title')),
+           e(t('brief.alt')), EMAIL, EMAIL, e(t('brief.wa')), WHATSAPP, PHONE_DISPLAY, e(t('brief.title')),
            e(t('brief.step')), e(t('brief.of')),
            e(t('brief.q1')), i18n('p', 'brief.q1h', 'brief__hint'), services, nav_next,
            e(t('brief.q2')), times, e(t('brief.budget')), e(t('brief.budgetPh')), nav_back, nav_next,
@@ -140,7 +156,20 @@ def p_sticky(base=''):
             % (base, i18n('span', 'sticky.text'), e(t('sticky.cta'))))
 
 
-PARTIALS = {'clients': p_clients, 'midcta': p_midcta, 'faq': p_faq, 'brief': p_brief, 'sticky': p_sticky}
+def p_contactbar(base=''):
+    icons = ''.join('<li><a class="cbar__icon cbar__icon--%s" href="%s"%s aria-label="%s" title="%s">%s</a></li>'
+                    % (k, u, '' if u.startswith('mailto:') else ' target="_blank" rel="noopener"', lab, lab, icon(k)) for k, u, lab in SOCIAL)
+    return ('<section class="cbar f-wrap" aria-labelledby="cbarTitle"><div class="cbar__head">'
+            '<h2 class="cbar__title" id="cbarTitle" data-i18n="cbar.title">%s</h2>%s</div>'
+            '<ul class="cbar__icons">%s</ul>'
+            '<ul class="cbar__lines"><li>%s<span data-i18n="cbar.email">%s</span> <a href="mailto:%s">%s</a></li>'
+            '<li>%s<span data-i18n="cbar.phone">%s</span> <a href="%s" target="_blank" rel="noopener" dir="ltr">%s</a></li></ul></section>'
+            % (e(t('cbar.title')), i18n('p', 'cbar.text', 'cbar__text'), icons,
+               icon('gmail', 18), e(t('cbar.email')), EMAIL, EMAIL,
+               icon('whatsapp', 18), e(t('cbar.phone')), WHATSAPP, PHONE_DISPLAY))
+
+
+PARTIALS = {'contactbar': p_contactbar, 'clients': p_clients, 'midcta': p_midcta, 'faq': p_faq, 'brief': p_brief, 'sticky': p_sticky}
 
 
 # ---------------------------------------------------------------- static lists
@@ -176,12 +205,14 @@ def jsonld(url):
          'mainEntity': {'@id': person_id}, 'inLanguage': 'en'},
         {'@type': 'Person', '@id': person_id, 'name': NAME_EN, 'alternateName': NAME_AR,
          'jobTitle': EN['hero.kicker'], 'description': EN['meta.description'], 'image': img, 'url': SITE_URL,
-         'email': 'mailto:' + EMAIL, 'knowsLanguage': ['ar', 'en'],
+         'email': 'mailto:' + EMAIL, 'telephone': PHONE, 'sameAs': SAME_AS, 'knowsLanguage': ['ar', 'en'],
+         'hasCredential': {'@type': 'EducationalOccupationalCredential', 'credentialCategory': 'degree',
+                           'name': 'Bachelor of Applied Arts (Design)'},
          'knowsAbout': ['Brand identity design', 'Brand guidelines', 'Logo design', 'Social media design',
                         'Print design', 'Event collateral', 'Company profile design', 'Arabic typography'],
          'workLocation': [{'@type': 'Country', 'name': n} for n in COUNTRIES.values()]},
         {'@type': 'ProfessionalService', '@id': SITE_URL + '#service', 'name': NAME_EN + ' — ' + EN['hero.kicker'],
-         'url': SITE_URL, 'image': img, 'email': EMAIL, 'founder': {'@id': person_id},
+         'url': SITE_URL, 'image': img, 'email': EMAIL, 'telephone': PHONE, 'sameAs': SAME_AS, 'founder': {'@id': person_id},
          'description': EN['meta.description'],
          'areaServed': [{'@type': 'Country', 'name': n} for n in COUNTRIES.values()],
          'availableLanguage': ['Arabic', 'English'],
@@ -190,7 +221,7 @@ def jsonld(url):
                                                 'description': EN['svc.%s.d' % k]}} for k in SERVICES]}},
         {'@type': 'FAQPage', '@id': url + '#faq', 'mainEntity': [
             {'@type': 'Question', 'name': EN['faq.q%d' % i],
-             'acceptedAnswer': {'@type': 'Answer', 'text': EN['faq.a%d' % i]}} for i in range(1, 6)]},
+             'acceptedAnswer': {'@type': 'Answer', 'text': EN['faq.a%d' % i]}} for i in range(1, FAQ_N + 1)]},
         {'@type': 'ItemList', '@id': url + '#work', 'name': EN['work.kicker'], 'itemListElement': [
             {'@type': 'ListItem', 'position': i + 1, 'item': {
                 '@type': 'CreativeWork', 'name': p['title']['en'], 'description': p['desc']['en'],
@@ -284,7 +315,9 @@ def write_root_files():
         '</urlset>\n' % (SITE_URL, today))
     lines = ['# %s — %s' % (NAME_EN, EN['hero.kicker']), '',
              '> ' + EN['meta.description'], '',
-             'Arabic name: %s. Works in Arabic and English. Contact: %s. Website: %s' % (NAME_AR, EMAIL, SITE_URL), '',
+             'Arabic name: %s. Bachelor of Applied Arts (Design), 8+ years in graphic design. Works in Arabic and English.' % NAME_AR, '',
+             'Contact: email %s · WhatsApp %s (%s) · Instagram %s · Behance %s · Facebook %s · Website %s'
+             % (EMAIL, PHONE_DISPLAY, WHATSAPP, SAME_AS[0], SAME_AS[1], SAME_AS[2], SITE_URL), '',
              '## Services', '']
     lines += ['- **%s**: %s' % (EN['svc.%s.t' % k], EN['svc.%s.d' % k]) for k in SERVICES]
     lines += ['', '## Markets', '', '- ' + ', '.join(COUNTRIES.values()), '', '## Selected projects', '']
@@ -292,9 +325,9 @@ def write_root_files():
         meta = ', '.join([EN['cat.' + c] for c in p['cats']] + ([COUNTRIES[p['country']]] if p['country'] else []))
         lines.append('- **%s** (%s): %s — %d designs' % (p['title']['en'], meta, p['desc']['en'], len(p['images'])))
     lines += ['', '## FAQ', '']
-    for i in range(1, 6):
+    for i in range(1, FAQ_N + 1):
         lines += ['### ' + EN['faq.q%d' % i], '', EN['faq.a%d' % i], '']
-    lines += ['## How to hire', '', EN['faq.a4'] + ' Email: ' + EMAIL, '']
+    lines += ['## How to hire', '', EN['faq.a4'] + ' Email: ' + EMAIL + '. WhatsApp: ' + PHONE_DISPLAY + '.', '']
     open(os.path.join(ROOT, 'llms.txt'), 'w', encoding='utf-8').write('\n'.join(lines))
 
 

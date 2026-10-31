@@ -187,3 +187,6 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 800; }
   .tunnel__hud h2 { font-size: 26px; }
   .hud__hint { display: none; }
 }
+
+/* Arabic: outlined text shows seams where letters join, so use a solid fill instead. */
+[dir="rtl"] .hero__first { color: rgba(61, 245, 255, .75); -webkit-text-stroke: 0; }

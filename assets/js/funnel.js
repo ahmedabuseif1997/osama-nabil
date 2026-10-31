@@ -143,7 +143,7 @@
   /* ---------- Clients strip ---------- */
   function renderClients() {
     document.querySelectorAll('[data-clients]').forEach(function (ul) {
-      var names = PF.projects.filter(function (p) { return p.slug !== 'typography'; }).map(function (p) { return PF.pick(p.title); });
+      var names = PF.clients().map(function (p) { return PF.pick(p.title); });
       var html = names.map(function (n) { return '<li>' + n.replace(/[&<>"]/g, '') + '</li>'; }).join('');
       ul.innerHTML = ul.hasAttribute('data-marquee') ? html + html.replace(/<li>/g, '<li aria-hidden="true">') : html;
     });

@@ -31,7 +31,7 @@
   /* ---------- Kinetic rows ---------- */
   var rows = [], rowX = [0, 0], rowW = [0, 0];
   function renderRows() {
-    var words1 = SERVICES.map(PF.catLabel), words2 = ['UAE', 'KSA', 'Oman', 'Egypt'].map(function (w, i) { return PF.t('country.' + ['ae', 'sa', 'om', 'eg'][i]); });
+    var words1 = SERVICES.map(PF.catLabel), words2 = PF.profile.markets.map(PF.countryLabel);
     rows = [document.getElementById('row1'), document.getElementById('row2')];
     [words1, words2].forEach(function (words, i) {
       var chunk = words.map(function (w) { return '<span>' + esc(w) + '</span>'; }).join('');
@@ -128,17 +128,15 @@
   }
 
   function renderStats() {
-    var countries = {};
-    PF.projects.forEach(function (p) { if (p.country) countries[p.country] = 1; });
     var data = [
-      [PF.projects.filter(function (p) { return p.slug !== 'typography'; }).length, 'stats.brands'],
-      [Object.keys(countries).length, 'stats.countries'],
-      [PF.totalImages(), 'stats.designs'],
-      [SERVICES.length, 'stats.disciplines']
+      [PF.profile.years, 'stats.years', '+'],
+      [PF.clients().length, 'stats.brands'],
+      [PF.profile.markets.length, 'stats.countries'],
+      [PF.totalImages(), 'stats.designs']
     ];
     var wrap = document.getElementById('stats');
-    wrap.innerHTML = data.map(function (d) { return '<div><b>' + d[0] + '</b><span>' + esc(PF.t(d[1])) + '</span></div>'; }).join('');
-    wrap.querySelectorAll('b').forEach(function (b, i) { PF.countUp(b, data[i][0]); });
+    wrap.innerHTML = data.map(function (d) { return '<div><b>' + d[0] + (d[2] || '') + '</b><span>' + esc(PF.t(d[1])) + '</span></div>'; }).join('');
+    wrap.querySelectorAll('b').forEach(function (b, i) { PF.countUp(b, data[i][0], data[i][2]); });
   }
 
   function renderAll() {

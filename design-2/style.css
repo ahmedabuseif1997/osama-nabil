@@ -157,3 +157,6 @@ h1, h2, h3 { margin: 0; }
   .wall__cols { columns: 2 140px; column-gap: 8px; }
   .wall__cols button { margin-bottom: 8px; }
 }
+
+/* Arabic: outlined text shows seams where letters join, so use a solid fill instead. */
+[dir="rtl"] .hero__line--out { color: var(--accent); -webkit-text-stroke: 0; }

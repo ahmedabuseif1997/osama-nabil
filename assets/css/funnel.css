@@ -27,6 +27,8 @@
 .clients__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 24px; margin-bottom: 18px; }
 .clients__title { margin: 0; font-family: var(--f-display); font-size: clamp(18px, 2vw, 24px); }
 .clients__kicker { margin: 0; color: var(--f-muted); font-size: 14px; }
+/* The rail is always left-to-right so the marquee track starts at the left edge in Arabic too. */
+.clients__rail { direction: ltr; overflow: hidden; }
 .clients__list { list-style: none; margin: 0; padding: 0; display: flex; gap: 10px; width: max-content; direction: ltr; animation: f-marquee 60s linear infinite; }
 .clients__list li { white-space: nowrap; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--f-line); background: var(--f-card); font-weight: 600; font-size: 15px; }
 .clients:hover .clients__list { animation-play-state: paused; }
@@ -100,6 +102,31 @@
 .brief__done p { color: var(--f-muted); margin: 0 0 12px; }
 .brief__done a { color: inherit; font-weight: 700; overflow-wrap: anywhere; }
 .brief__out { width: 100%; min-height: 150px; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--f-line); background: transparent; color: inherit; font: inherit; font-size: 14px; resize: vertical; }
+
+/* Contact bar (social icons + email + phone) */
+.cbar { padding-block: clamp(70px, 8vw, 120px) clamp(24px, 3vw, 40px); display: grid; grid-template-columns: 1fr auto; gap: 18px 40px; align-items: center; }
+.cbar__title { margin: 0 0 6px; font-family: var(--f-display); font-size: clamp(28px, 3.4vw, 46px); line-height: 1.1; }
+.cbar__text { margin: 0; color: var(--f-muted); }
+.cbar__icons { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px; }
+.cbar__icon { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--f-line); background: var(--f-card); color: inherit; transition: background .25s, color .25s, border-color .25s, transform .25s; }
+.cbar__icon:hover, .cbar__icon:focus-visible { color: #fff; border-color: transparent; transform: translateY(-3px); outline: none; }
+.cbar__icon--whatsapp:hover, .cbar__icon--whatsapp:focus-visible { background: #25d366; }
+.cbar__icon--instagram:hover, .cbar__icon--instagram:focus-visible { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285aeb 90%); }
+.cbar__icon--behance:hover, .cbar__icon--behance:focus-visible { background: #1769ff; }
+.cbar__icon--facebook:hover, .cbar__icon--facebook:focus-visible { background: #1877f2; }
+.cbar__icon--gmail:hover, .cbar__icon--gmail:focus-visible { background: #ea4335; }
+.cbar__lines { grid-column: 1 / -1; list-style: none; margin: 8px 0 0; padding: 18px 0 0; border-top: 1px solid var(--f-line); display: flex; flex-wrap: wrap; gap: 12px 36px; }
+.cbar__lines li { display: inline-flex; align-items: center; gap: 10px; color: var(--f-muted); font-size: 15px; }
+.cbar__lines svg { color: var(--f-accent); flex: 0 0 auto; }
+.cbar__lines a { color: var(--f-fg, inherit); font-weight: 700; text-decoration: none; overflow-wrap: anywhere; unicode-bidi: isolate; }
+.cbar__lines a:hover { color: var(--f-accent); }
+@media (max-width: 760px) {
+  .cbar { grid-template-columns: 1fr; }
+  .cbar__lines { flex-direction: column; }
+}
+
+/* Phone numbers never wrap mid-number. */
+a[dir="ltr"][href^="https://wa.me"] { white-space: nowrap; }
 
 /* Sticky CTA */
 .sticky-cta { position: fixed; z-index: 900; inset-inline-end: 18px; bottom: 18px; display: flex; align-items: center; gap: 14px; padding: 8px 8px 8px 20px; border-radius: 999px; background: var(--f-sticky-bg, rgba(15, 17, 22, .9)); color: var(--f-sticky-fg, #fff); border: 1px solid var(--f-line); box-shadow: 0 16px 40px rgba(0, 0, 0, .3); backdrop-filter: blur(12px); transform: translateY(140%); opacity: 0; transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .3s; pointer-events: none; }

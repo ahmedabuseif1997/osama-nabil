@@ -21,7 +21,7 @@
     document.querySelector('[data-name-last]').textContent = parts.slice(1).join(' ');
     var cats = SERVICES.map(PF.catLabel);
     fillBand(document.getElementById('tapeA'), cats, 6);
-    fillBand(document.getElementById('tapeB'), ['ae', 'sa', 'om', 'eg'].map(function (c) { return PF.countryLabel(c); }).concat([PF.t('hero.kicker')]), 6);
+    fillBand(document.getElementById('tapeB'), PF.profile.markets.map(PF.countryLabel).concat([PF.t('hero.kicker')]), 6);
     fillBand(document.getElementById('talk'), [PF.t('footer.talk'), PF.t('cta.contact')], 4);
     document.getElementById('badgeText').textContent = (PF.t('hero.kicker') + ' • ').repeat(2);
   }
@@ -147,11 +147,9 @@
   }
 
   function renderStats() {
-    var countries = {};
-    PF.projects.forEach(function (p) { if (p.country) countries[p.country] = 1; });
     var data = [
-      [PF.projects.filter(function (p) { return p.slug !== 'typography'; }).length, 'stats.brands'],
-      [Object.keys(countries).length, 'stats.countries'],
+      [PF.clients().length, 'stats.brands'],
+      [PF.profile.markets.length, 'stats.countries'],
       [PF.totalImages(), 'stats.designs'],
       [SERVICES.length, 'stats.disciplines']
     ];

@@ -55,7 +55,10 @@ For a custom domain: `SITE_URL=https://example.com/ python3 tools/prerender.py`.
 
 ## Editing
 
-- Copy / translations: `assets/js/strings.js`. Contact email: `assets/js/core.js` → `profile.email` and `tools/prerender.py` → `EMAIL`.
+- Copy / translations: `assets/js/strings.js`.
+- Contact details (email, WhatsApp, Instagram, Behance, Facebook), years of experience and markets (Egypt, Saudi Arabia, UAE, Oman, Qatar — in display order): `assets/js/core.js` → `profile`, mirrored in `tools/prerender.py` (`EMAIL`, `PHONE`, `SOCIAL`, `COUNTRIES`).
+- Client list order = project order in `assets/js/data.js`; `"client": false` keeps a project out of the client strip (Green Motion, Arabic Typography).
+- Brand icons in `assets/img/icons/` are from Simple Icons (CC0).
 - Add a project: images in `assets/work/<slug>/` (cover = `01.webp`) and an entry in `assets/js/data.js`.
 - `?lang=ar` forces Arabic; the choice is remembered per browser.
 - Then run `python3 tools/prerender.py`.
