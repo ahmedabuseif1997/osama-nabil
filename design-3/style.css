@@ -64,7 +64,7 @@ h1, h2, h3 { margin: 0; font-family: var(--display); }
 .tile--stat b, .tile--countries b { display: block; font-family: 'Syne', sans-serif; font-size: clamp(48px, 5vw, 76px); line-height: 1; font-weight: 800; }
 .tile--stat span { color: var(--muted); font-weight: 600; }
 .tile--lime { background: var(--lime); color: var(--ink); border-color: var(--lime); }
-.tile--lime span { color: rgba(14, 11, 26, .7); }
+.tile--lime span { color: #4a5425; }
 .tile--countries { display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }
 .tile--countries .label { color: var(--muted); font-weight: 600; font-size: 14px; }
 .tile--countries ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
