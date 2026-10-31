@@ -104,7 +104,6 @@ window.PORTFOLIO_STRINGS = {
   "brief.back": "Back",
   "brief.send": "Send my brief",
   "brief.req": "Please fill in this field.",
-  "brief.pick": "Choose at least one option.",
   "brief.trust1": "No commitment",
   "brief.trust2": "About 60 seconds",
   "brief.trust3": "Arabic or English",
@@ -157,7 +156,9 @@ window.PORTFOLIO_STRINGS = {
   "cur.AED": "AED — UAE dirham",
   "cur.OMR": "OMR — Omani rial",
   "cur.QAR": "QAR — Qatari riyal",
-  "cur.USD": "USD — US dollar"
+  "cur.USD": "USD — US dollar",
+  "brief.pick.services": "Choose at least one service above.",
+  "brief.pick.timeline": "Choose when you need it (above)."
  },
  "ar": {
   "meta.title": "أسامة نبيل — مصمم جرافيك وهويات بصرية",
@@ -263,7 +264,6 @@ window.PORTFOLIO_STRINGS = {
   "brief.back": "رجوع",
   "brief.send": "أرسل طلبي",
   "brief.req": "من فضلك املأ هذا الحقل.",
-  "brief.pick": "اختر خيارًا واحدًا على الأقل.",
   "brief.trust1": "بدون التزام",
   "brief.trust2": "حوالي 60 ثانية",
   "brief.trust3": "بالعربية أو الإنجليزية",
@@ -316,6 +316,8 @@ window.PORTFOLIO_STRINGS = {
   "cur.AED": "درهم إماراتي (AED)",
   "cur.OMR": "ريال عُماني (OMR)",
   "cur.QAR": "ريال قطري (QAR)",
-  "cur.USD": "دولار أمريكي (USD)"
+  "cur.USD": "دولار أمريكي (USD)",
+  "brief.pick.services": "اختر خدمة واحدة على الأقل من الأعلى.",
+  "brief.pick.timeline": "اختر متى تحتاج المشروع (من الأعلى)."
  }
 };

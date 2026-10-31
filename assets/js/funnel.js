@@ -26,9 +26,10 @@
 
     function valid(step) {
       var group = step.querySelector('[data-group]');
-      if (group && !step.querySelector('[name="' + group.getAttribute('data-group') + '"]:checked')) {
-        err(step, PF.t('brief.pick'));
-        return false;
+      if (group) {
+        var name = group.getAttribute('data-group'), missing = !step.querySelector('[name="' + name + '"]:checked');
+        group.classList.toggle('is-invalid', missing);
+        if (missing) { err(step, PF.t('brief.pick.' + name)); return false; }
       }
       var bad = Array.prototype.filter.call(step.querySelectorAll('[required]'), function (f) { return !f.value.trim(); });
       step.querySelectorAll('[required]').forEach(function (f) { f.setAttribute('aria-invalid', String(!f.value.trim())); });
@@ -58,7 +59,10 @@
       }
     });
 
-    form.addEventListener('change', function () { err(steps[cur], ''); });
+    form.addEventListener('change', function () {
+      err(steps[cur], '');
+      steps[cur].querySelectorAll('.brief__chips.is-invalid').forEach(function (g) { g.classList.remove('is-invalid'); });
+    });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();

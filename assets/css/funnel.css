@@ -87,6 +87,7 @@
 .brief__chip span { display: inline-flex; align-items: center; min-height: 46px; padding: 0 18px; border-radius: 999px; border: 1.5px solid var(--f-line); font-weight: 600; transition: background .2s, color .2s, border-color .2s; }
 .brief__chip input:checked + span { background: var(--f-accent); color: var(--f-accent-ink); border-color: var(--f-accent); }
 .brief__chip input:checked + span::before { content: '✓'; margin-inline-end: 8px; font-weight: 800; }
+.brief__chips.is-invalid .brief__chip span { border-color: #ff5a5a; }
 .brief__chip input:focus-visible + span { outline: 3px solid var(--f-accent); outline-offset: 2px; }
 .brief__field { display: grid; gap: 6px; margin-top: 14px; }
 .brief__field label { font-size: 14px; font-weight: 600; }
