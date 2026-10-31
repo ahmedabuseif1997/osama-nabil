@@ -33,10 +33,19 @@
   function renderRows() {
     var words1 = SERVICES.map(PF.catLabel), words2 = PF.profile.markets.map(PF.countryLabel);
     rows = [document.getElementById('row1'), document.getElementById('row2')];
+    var flags = PF.profile.markets, rtl = document.documentElement.dir === 'rtl';
     [words1, words2].forEach(function (words, i) {
-      var chunk = words.map(function (w) { return '<span>' + esc(w) + '</span>'; }).join('');
+      /* Country names (second row) are filled with their flag colours; the star stays outside the flag. */
+      var items = words.map(function (w, k) { return '<span>' + (i ? '<b class="flag flag--' + flags[k] + '" data-t="' + esc(w) + '">' + esc(w) + '</b>' : esc(w)) + '</span>'; });
+      /* Rows are laid out left-to-right, so Arabic gets the items reversed to read in order from the right. */
+      if (rtl) items.reverse();
+      var chunk = items.join('');
       rows[i].innerHTML = chunk + chunk + chunk + chunk;
       rowW[i] = rows[i].scrollWidth / 2;
+      /* Start with the first item (Egypt / first service) at the reading edge. */
+      var cw = rowW[i] / 2;
+      rowX[i] = rtl ? innerWidth - Math.ceil(innerWidth / cw) * cw : 0;
+      rows[i].style.transform = 'translate3d(' + rowX[i].toFixed(1) + 'px,0,0)';
     });
   }
 
@@ -46,7 +55,8 @@
     (function tick() {
       var boost = 1 + Math.min(Math.abs(vel), 120) * 0.12, skew = M.clamp(vel * 0.12, -12, 12);
       rows.forEach(function (r, i) {
-        rowX[i] -= (i ? -1 : 1) * 0.6 * boost;
+        var dir = (i ? 1 : -1) * (document.documentElement.dir === 'rtl' ? -1 : 1);
+        rowX[i] -= dir * 0.6 * boost;
         if (rowW[i]) { rowX[i] = ((rowX[i] % rowW[i]) - rowW[i]) % rowW[i]; }
         r.style.transform = 'translate3d(' + rowX[i].toFixed(1) + 'px,0,0) skewX(' + (-skew).toFixed(2) + 'deg)';
       });
@@ -150,6 +160,7 @@
   function renderAll() {
     renderName();
     renderRows();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderRows);
     buildFlow();
     renderRowsList();
     splitRead();
