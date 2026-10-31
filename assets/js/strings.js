@@ -2,7 +2,6 @@
 window.PORTFOLIO_STRINGS = {
  "en": {
   "meta.title": "Osama Nabil — Graphic & Brand Designer",
-  "brand": "OSAMA.",
   "lang.switch": "العربية",
   "nav.work": "Work",
   "nav.services": "Services",
@@ -169,7 +168,6 @@ window.PORTFOLIO_STRINGS = {
  },
  "ar": {
   "meta.title": "أسامة نبيل — مصمم جرافيك وهويات بصرية",
-  "brand": "أسامة.",
   "lang.switch": "English",
   "nav.work": "الأعمال",
   "nav.services": "الخدمات",
