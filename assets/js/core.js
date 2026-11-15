@@ -39,6 +39,7 @@
     projects: projects,
     lang: readLang(),
     t: function (key) { return (strings[PF.lang] && strings[PF.lang][key]) || strings.en[key] || key; },
+    has: function (key) { return !!((strings[PF.lang] && strings[PF.lang][key]) || strings.en[key]); },
     name: function () { return profile.name[PF.lang]; },
     pick: function (obj) { return obj ? (obj[PF.lang] || obj.en) : ''; },
     img: function (slug, file) { var m = window.PF_IMG_MAP; return (m && m[slug + '/' + file]) || base + 'assets/work/' + slug + '/' + file; },
@@ -64,7 +65,8 @@
       document.title = PF.t('meta.title');
       var md = document.querySelector('meta[name="description"]');
       if (md) md.setAttribute('content', PF.t('meta.description'));
-      document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = PF.t(el.getAttribute('data-i18n')); });
+      /* A key missing from the loaded strings keeps the page's existing text instead of showing the raw key. */
+      document.querySelectorAll('[data-i18n]').forEach(function (el) { var k = el.getAttribute('data-i18n'); if (PF.has(k)) el.textContent = PF.t(k); });
       document.querySelectorAll('[data-i18n-html]').forEach(function (el) { el.innerHTML = PF.t(el.getAttribute('data-i18n-html')); });
       document.querySelectorAll('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', PF.t(el.getAttribute('data-i18n-ph'))); });
       document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', PF.t(el.getAttribute('data-i18n-aria'))); });

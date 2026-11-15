@@ -290,6 +290,21 @@ def between(h, name, content):
     return pat.sub(lambda m: m.group(1) + content + m.group(3), h)
 
 
+def version_assets(h, page_dir):
+    """Appends ?v=<content hash> to local CSS/JS references so browsers fetch new files after each deploy."""
+    import hashlib
+
+    def repl(m):
+        ref = m.group(2)
+        f = os.path.normpath(os.path.join(page_dir, ref))
+        if not os.path.isfile(f):
+            return m.group(0)
+        v = hashlib.sha1(open(f, 'rb').read()).hexdigest()[:10]
+        return '%s="%s?v=%s"' % (m.group(1), ref, v)
+
+    return re.sub(r'(src|href)="((?:\.\./)*(?:assets/[^"?#]+|[a-z0-9_-]+)\.(?:js|css))(?:\?v=[0-9a-f]+)?"', repl, h)
+
+
 def process(path):
     rel = os.path.relpath(os.path.dirname(path), ROOT)
     url = SITE_URL if rel == '.' else SITE_URL + rel.replace(os.sep, '/') + '/'
@@ -305,6 +320,7 @@ def process(path):
     h = between(h, 'pr:services', pr_services())
     h = between(h, 'pr:services:li', pr_services(li=True))
     h = fill_i18n(h)
+    h = version_assets(h, os.path.dirname(path))
     open(path, 'w', encoding='utf-8').write(h)
     return True
 
