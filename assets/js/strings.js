@@ -164,8 +164,7 @@ window.PORTFOLIO_STRINGS = {
   "brief.waP": "Your brief is already written in the chat. If WhatsApp didn’t open, copy it and send it here:",
   "brief.waOk": "Your brief is already written in the chat, and a copy reached Osama’s inbox.",
   "brief.mailOkT": "Brief sent — thank you!",
-  "brief.mailOkP": "It’s in Osama’s inbox now.",
-  "footer.credit": "Website by"
+  "brief.mailOkP": "It’s in Osama’s inbox now."
  },
  "ar": {
   "meta.title": "أسامة نبيل — مصمم جرافيك وهويات بصرية",
@@ -331,7 +330,6 @@ window.PORTFOLIO_STRINGS = {
   "brief.waP": "طلبك مكتوب بالفعل في المحادثة. إن لم يفتح واتساب، انسخه وأرسله هنا:",
   "brief.waOk": "طلبك مكتوب بالفعل في المحادثة، ووصلت نسخة منه إلى بريد أسامة.",
   "brief.mailOkT": "تم إرسال طلبك — شكرًا لك!",
-  "brief.mailOkP": "طلبك الآن في بريد أسامة.",
-  "footer.credit": "تصميم وتطوير الموقع:"
+  "brief.mailOkP": "طلبك الآن في بريد أسامة."
  }
 };
