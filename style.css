@@ -139,6 +139,10 @@ h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-tran
 
 .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-block: 48px; color: var(--muted); font-size: 14px; }
 .foot a { text-decoration: none; }
+.foot__end { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.foot__credit { font-size: 11px; opacity: .6; transition: opacity .2s, color .2s; }
+.foot__credit b { font-weight: 600; direction: ltr; unicode-bidi: isolate; }
+.foot__credit:hover { opacity: 1; color: var(--accent); }
 .reveal { opacity: 0; transform: translateY(36px); transition: opacity .9s, transform 1s cubic-bezier(.2, .8, .2, 1); }
 .reveal.is-in { opacity: 1; transform: none; }
 

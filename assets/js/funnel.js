@@ -182,7 +182,15 @@
     if (!bar || !brief) return;
     var briefVisible = false;
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (en) { briefVisible = en[0].isIntersecting; update(); }, { threshold: 0.05 }).observe(brief);
+      var seen = new Map();
+      var io = new IntersectionObserver(function (en) {
+        en.forEach(function (e) { seen.set(e.target, e.isIntersecting); });
+        briefVisible = Array.from(seen.values()).some(Boolean);
+        update();
+      }, { threshold: 0.05 });
+      io.observe(brief);
+      var foot = document.querySelector('.foot');
+      if (foot) io.observe(foot);
     }
     function update() {
       var on = window.scrollY > window.innerHeight * 0.7 && !briefVisible && !document.body.classList.contains('pf-lb-open');
